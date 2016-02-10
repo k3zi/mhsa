@@ -2,7 +2,7 @@
 require_once('/home/mhsa/includes/include.php');
 
 $top10 = array();
-foreach($user in getTop10Players()) {
+foreach(getTop10Players() as $user) {
   $top10[] = array($user['name'].(strlen($user['twitter_name']) > 0 ? ' '.$user['twitter_name'] : ''), $user['num_kills'], $user['dead']);
 }
 
