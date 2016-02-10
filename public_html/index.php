@@ -172,7 +172,7 @@ require_once('/home/mhsa/includes/include.php');
         <div class="row">
           <div class="col-xs-12 text-center wow fadeIn">
             <h2 class="heading">The Rules</h2>
-            <p class="lead">The rules are simple and must be ahered to at all times, otherwise you will face disqualification.</p>
+            <p class="lead">The rules are simple and must be adhered to at all times, otherwise you will face disqualification.</p>
           </div>
         </div>
       </div>
