@@ -38,7 +38,7 @@ echo '2. Test Get Available Assassin:'.'<br>';
 echo("<pre>".print_r(getAvailableAssassin(), true)."</pre>");
 
 echo '3. Test Call:'.'<br>';
-echo("<pre>".print_r(singleCall('8177297784', "https://mhsa.io/api/deeznuts_response.xml", true)."</pre>");
+echo("<pre>".print_r(singleCall('8177297784', "https://mhsa.io/api/deeznuts_response.xml"), true)."</pre>");
 
 echo $spacer;
 
