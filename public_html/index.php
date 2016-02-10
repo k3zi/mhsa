@@ -112,8 +112,8 @@ require_once('/home/mhsa/includes/include.php');
               <form id="contactForm" style="padding: 0" novalidate>
                 <div class="row control-group">
                   <div class="form-group col-lg-6 floating-label-form-group controls">
-                    <label for="name" class="sr-only control-label">Name</label>
-                    <input type="text" class="form-control input-lg" placeholder="Name" id="name" required data-validation-required-message="Please enter your name.">
+                    <label for="name" class="sr-only control-label">Full Name</label>
+                    <input type="text" class="form-control input-lg" placeholder="Full Name" id="name" required data-validation-required-message="Please enter your name.">
                     <span class="help-block text-danger"></span>
                   </div>
                   <div class="form-group col-lg-6 floating-label-form-group controls no-pad-right">
@@ -172,7 +172,7 @@ require_once('/home/mhsa/includes/include.php');
         <div class="row">
           <div class="col-xs-12 text-center wow fadeIn">
             <h2 class="heading">The Rules</h2>
-            <p class="lead">The rules are simple and must be ahered to at all times, otherwise you will face disqualification.</p>
+            <p class="lead">The rules are simple and must be adhered to at all times, otherwise you will face disqualification.</p>
           </div>
         </div>
       </div>
