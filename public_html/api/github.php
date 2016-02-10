@@ -6,19 +6,19 @@
 // -------------------------------------------------------------------------------------------------
 // (1) This must be a GitHub PUSH message, indicating that a repository changed.
 if (!isset ($_SERVER['HTTP_X_GITHUB_EVENT']))
-    exit;
+    die('-1');
 if ($_SERVER['HTTP_X_GITHUB_EVENT'] != 'push')
-    exit;
+    die('-2');
 // (2) This must be a GitHub request, with the entire contents signed.
 if (!isset ($_SERVER['HTTP_X_HUB_SIGNATURE']))
-    exit;
+    die('-3');
 $signature = $_SERVER['HTTP_X_HUB_SIGNATURE'];
 if (strpos($signature, '=') == false)
-    exit;
+    die('-4');
 list($algorithm, $hash) = explode('=', $signature, 2);
 $payload = file_get_contents('php://input');
 if (hash_hmac($algorithm, $payload, "AH>3m<&f^d\2+/MP") != $hash)
-    exit;
+    die('-5');
 // -------------------------------------------------------------------------------------------------
 $commands = [
     // Updates the local copy of the repository with the most recent remote changes.
@@ -30,4 +30,5 @@ $commands = [
 foreach ($commands as $command)
     echo shell_exec($command);
 
+echo "\ncomplete";
 ?>
