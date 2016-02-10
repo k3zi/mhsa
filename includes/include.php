@@ -82,7 +82,7 @@ function getNumberOfPlayersSuicide() {
 	return DB::queryFirstField("SELECT COUNT(users.user_id) FROM users ".MHSA_SQL_IS_SUICIDE." AND ".MHSA_SQL_VALID_USER);
 }
 
-function getNumberOfKills()) {
+function getNumberOfKills() {
 	return DB::queryFirstField("SELECT COUNT(kill_id) FROM kills WHERE killer != eliminated");
 }
 
