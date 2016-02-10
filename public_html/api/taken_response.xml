@@ -1,0 +1,5 @@
+<Response>
+  <Speak>Someone has been assigned to assassinate you</Speak>
+  <Speak>They left a message</Speak>
+  <Play>https://mhsa.io/api/media/taken.mp3</Play>
+</Response>

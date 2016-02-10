@@ -1,0 +1,5 @@
+<Response>
+  <Speak>Can you guess who your assassin is?</Speak>
+  <Speak>They left a hint</Speak>
+  <Play>https://mhsa.io/api/media/deeznuts.mp3</Play>
+</Response>

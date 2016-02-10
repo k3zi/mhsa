@@ -1,0 +1,4 @@
+<Response>
+  <Speak>An assassin is after you</Speak>
+  <Play>https://mhsa.io/api/media/johncena.mp3</Play>
+</Response>
