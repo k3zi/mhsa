@@ -4,6 +4,8 @@ public_html/error_log
 public_html/api/error_log
 public_html/ajax/error_log
 
+**.DS_Store
+
 /*
 
 # Except our actual application folders

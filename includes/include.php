@@ -36,6 +36,8 @@ session_start();
 //Fetch Functions
 define('MHSA_SQL_VALID_USER', 'LENGTH(users.phone) > 0');
 define('MHSA_SQL_IS_ALIVE', 'LEFT JOIN kills ON users.user_id = kills.eliminated WHERE kills.kill_id IS NULL');
+define('MHSA_SQL_IS_NOT_ALIVE', 'LEFT JOIN kills ON users.user_id = kills.eliminated WHERE kills.kill_id IS NOT NULL');
+define('MHSA_SQL_IS_SUICIDE', 'LEFT JOIN kills ON users.user_id = kills.eliminated WHERE kills.killer = kills.eliminated AND kills.kill_id IS NOT NULL');
 
 function getAvailableAssassins() {
 	return DB::query("SELECT users.* FROM users ".MHSA_SQL_IS_ALIVE." AND ".MHSA_SQL_VALID_USER." AND users.target_id = -1 ORDER BY RAND()");
@@ -68,8 +70,20 @@ function getUser($user_id) {
 
 //Stats Function
 
+function getNumberOfPlayersDead() {
+	return DB::queryFirstField("SELECT COUNT(users.user_id) FROM users ".MHSA_SQL_IS_NOT_ALIVE." AND ".MHSA_SQL_VALID_USER);
+}
+
 function getNumberOfPlayersAlive() {
 	return DB::queryFirstField("SELECT COUNT(users.user_id) FROM users ".MHSA_SQL_IS_ALIVE." AND ".MHSA_SQL_VALID_USER);
+}
+
+function getNumberOfPlayersSuicide() {
+	return DB::queryFirstField("SELECT COUNT(users.user_id) FROM users ".MHSA_SQL_IS_SUICIDE." AND ".MHSA_SQL_VALID_USER);
+}
+
+function getNumberOfKills()) {
+	return DB::queryFirstField("SELECT COUNT(kill_id) FROM kills WHERE killer != eliminated");
 }
 
 function getTotalNumberOfPlayers() {
@@ -119,7 +133,8 @@ function checkIfBothTexted() {
 
 					DB::insert('kills', array(
 					  'eliminated' => $eliminated['user_id'],
-					  'killer' => $assassin['user_id']
+					  'killer' => $assassin['user_id'],
+						'date' => time()
 					));
 
 					if($match = performMatch($assassin)) {
