@@ -112,8 +112,8 @@ require_once('/home/mhsa/includes/include.php');
               <form id="contactForm" style="padding: 0" novalidate>
                 <div class="row control-group">
                   <div class="form-group col-lg-6 floating-label-form-group controls">
-                    <label for="name" class="sr-only control-label">Name</label>
-                    <input type="text" class="form-control input-lg" placeholder="Name" id="name" required data-validation-required-message="Please enter your name.">
+                    <label for="name" class="sr-only control-label">First Name</label>
+                    <input type="text" class="form-control input-lg" placeholder="First Name" id="name" required data-validation-required-message="Please enter your name.">
                     <span class="help-block text-danger"></span>
                   </div>
                   <div class="form-group col-lg-6 floating-label-form-group controls no-pad-right">
