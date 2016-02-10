@@ -90,6 +90,10 @@ function getTotalNumberOfPlayers() {
 	return DB::queryFirstField("SELECT COUNT(users.user_id) FROM users WHERE phone != ''");
 }
 
+function getTop10Players() {
+	return DB::query("SELECT users.name, users.twitter_name, COUNT(k.kill_id) AS num_kills, (d.kill_id IS NOT NULL) AS dead FROM users LEFT JOIN kills k ON users.user_id = k.killer LEFT JOIN kills d ON users.user_id = d.eliminated WHERE LENGTH(users.phone) > 0 GROUP BY users.phone ORDER BY num_kills DESC LIMIT 10");
+}
+
 //Handle Text Respone
 
 function userTextedWasAssassinated($user) {
@@ -134,7 +138,7 @@ function checkIfBothTexted() {
 					DB::insert('kills', array(
 					  'eliminated' => $eliminated['user_id'],
 					  'killer' => $assassin['user_id'],
-						'date' => time()
+						'time' => time()
 					));
 
 					if($match = performMatch($assassin)) {
