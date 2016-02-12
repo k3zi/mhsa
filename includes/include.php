@@ -1,7 +1,7 @@
 <?php
 require_once('db.class.php');
 require_once('vendor/autoload.php');
-require_once('twilio-php/Services/Twilio.php');
+require_once('twilio-php/Twilio.php');
 
 //DB Config
 DB::$user = 'mhsa_admin';
