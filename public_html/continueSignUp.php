@@ -71,7 +71,7 @@ $username = $_SESSION['twitter_name'];
 
             <form id="contactForm" novalidate>
               <div class="row control-group">
-                <div class="form-group col-lg-6 floating-label-form-group controls no-pad-right">
+                <div class="form-group col-lg-12 floating-label-form-group controls no-pad-right">
                   <label for="email" class="sr-only control-label">Email</label>
                   <input type="email" class="form-control input-lg text-center" placeholder="Email" id="email" required data-validation-required-message="Please enter your email address.">
                   <span class="help-block text-danger"></span>
