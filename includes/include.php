@@ -1,7 +1,7 @@
 <?php
 require_once('db.class.php');
 require_once('vendor/autoload.php');
-require_once "plivo.php";
+require_once('twilio-php/Services/Twilio.php');
 
 //DB Config
 DB::$user = 'mhsa_admin';
@@ -18,8 +18,8 @@ define('TWITTER_OAUTH_CALLBACK', 'https://mhsa.io/api/twitter_callback.php');
 define('TWITTER_ID', 4755885121);
 
 //Plivo Config
-$pilvo = new RestAPI('MANTDIZTVMNWY5ZTZLZJ', 'M2FmNTdiYjUyZDhkNDhjZjFiYjg1NjhlMGI2MTNm');
-define('PLIVO_PHONE_NUMBER', '18174352347');
+$twilio = new Services_Twilio('ACc1dce955d005655fe823e933ee1e75c7', '1c10c40f0b4a558232d8481205413411');
+define('TWILIO_PHONE_NUMBER', '18172007256');
 
 //Message Config
 define('MHSA_CONFIRM_MESSAGE', "Martin Assassins:\n\nPlease text back CONFIRM to verify your registration and agreement to the rules set forth on: https://mhsa.io");
@@ -258,43 +258,21 @@ function performSwitchMatch($user) {
 //Plivo Functions
 
 function singleSMS($to, $message) {
-  global $pilvo;
+  global $twilio;
 
-  $params = array(
-	'src' => '18174352347',
-	'dst' => '1'.$to,
-	'text' => $message,
-	'type' => 'sms',
-  );
-  return $pilvo->send_message($params);
+	return $twilio->account->messages->sendMessage(TWILIO_PHONE_NUMBER, $to, $message);
 }
 
 function massSMS($toArray, $message){
-  global $pilvo;
-
-  $to = implode(', 1', $toArray);
-  $params = array(
-	'src' => '18174352347',
-	'dst' => '1'.$to,
-	'text' => $message,
-	'type' => 'sms',
-  );
-  return $pilvo->send_message($params);
+	foreach ($toArray as $to) {
+		singleSMS($to, $message);
+	}
 }
 
-function singleCall($to, $message) {
-	global $pilvo;
+function singleCall($to, $url) {
+	global $twilio;
 
-	$params = array(
-        'to' => '1'.$to,
-        'from' => PLIVO_PHONE_NUMBER,
-		'answer_url' => $message,
-        'answer_method' => "GET"
-        #'callback_url' => "http://myvoiceapp.com/callback/",
-        #'callback_method' => "GET" # The method used to notify the callback_url.
-    );
-
-    return $pilvo->make_call($params);
+	return $twilio->account->calls->create(TWILIO_PHONE_NUMBER, $to, $url);
 }
 
 function getRandomPrankCall() {

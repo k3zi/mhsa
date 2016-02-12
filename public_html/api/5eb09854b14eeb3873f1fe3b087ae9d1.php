@@ -3,7 +3,7 @@ require_once('/home/mhsa/includes/include.php');
 
 if(isset($_REQUEST['From'])){
   $phone = substr(trim($_REQUEST['From']), -10);
-  $message = trim($_REQUEST['Text']);
+  $message = trim($_REQUEST['Body']);
 
   if($user = DB::queryFirstRow("SELECT * FROM users WHERE unconfirmed_phone = %s", $phone)) {
     if(strtoupper($message) == 'CONFIRM') {
