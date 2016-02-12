@@ -40,9 +40,6 @@ echo("<pre>".print_r(getAvailableAssassin(), true)."</pre>");
 echo '3. Test Call:'.'<br>';
 singleCall('8177297784', getRandomPrankCall());
 
-echo '4. Test Tweets:'.'<br>';
-postToTwitter('Test Tweet');
-
 echo $spacer;
 
 echo '<h1>Running Simulation</h1><br><br>';
