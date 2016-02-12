@@ -13,12 +13,12 @@ function runSimulation() {
 	while($assassin = getUnavailableAssassin()) {
 		$eliminated = getUser($assassin['target_id']);
 		echo '<br><br><br>';
-		
+
 		echo 'ACTION: '.$assassin['name'].' killed '.$eliminated['name'];
 		userTextedWasAssassinated($eliminated);
 		userTextedDidEliminate($assassin);
 	}
-	
+
 	echo '<br><br><br>';
 	$user = getAvailableTrget();
 	echo 'Simulation Complete'.'<br>';
@@ -38,7 +38,7 @@ echo '2. Test Get Available Assassin:'.'<br>';
 echo("<pre>".print_r(getAvailableAssassin(), true)."</pre>");
 
 echo '3. Test Call:'.'<br>';
-echo("<pre>".print_r(singleCall('8177297784', "https://mhsa.io/api/johncena_response.xml"), true)."</pre>");
+singleCall('8177297784', getRandomPrankCall());
 
 echo $spacer;
 

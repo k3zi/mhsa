@@ -11,6 +11,7 @@ public_html/ajax/error_log
 # Except our actual application folders
 !.git
 !.gitignore
+!.htaccess
 !README.md
 
 !crons/

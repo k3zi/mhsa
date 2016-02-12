@@ -23,9 +23,9 @@ if($access_token) {
     if(count($users) > 0) {
       die("Twitter Sign Up Error: A user has already registered with this twitter account.");
     }
-	
+
 	autoFollow($access_token['oauth_token'], $access_token['oauth_token_secret']);
-	
+
     $_SESSION['twitter_id'] = $user->id;
     $_SESSION['twitter_token'] = serialize($access_token);
     $_SESSION['twitter_name'] = $user->screen_name;
