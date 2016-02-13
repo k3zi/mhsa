@@ -10,6 +10,6 @@ if(!$isLogin && $_SESSION['admin'] != 'mhsa_admin') {
 }
 
 function getKillsPerDay($days = 15) {
-	retur DB::query("SELECT FROM_UNIXTIME(`date`, '%D %M, %Y') AS group_date, count(`kill_id`) AS kills FROM kills WHERE date > %d GROUP BY group_date", $days*24*60*60);
+	return DB::query("SELECT FROM_UNIXTIME(`date`, '%D %M, %Y') AS group_date, count(`kill_id`) AS kills FROM kills WHERE date > %d GROUP BY group_date", $days*24*60*60);
 }
 ?>
