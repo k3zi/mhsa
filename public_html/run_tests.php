@@ -37,8 +37,8 @@ echo $spacer;
 echo '2. Test Get Available Assassin:'.'<br>';
 echo("<pre>".print_r(getAvailableAssassin(), true)."</pre>");
 
-echo '3. Test Call:'.'<br>';
-singleCall('8177297784', getRandomPrankCall());
+//echo '3. Test Call:'.'<br>';
+//singleCall('8177297784', getRandomPrankCall());
 
 echo $spacer;
 

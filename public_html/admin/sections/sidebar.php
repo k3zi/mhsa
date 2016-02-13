@@ -29,9 +29,16 @@ function activeFor($id) {
           <i class="fa fa-dashboard"></i> <span>Dashboard</span>
         </a>
       </li>
+
+      <li<?=activeFor(2)?>>
+        <a href="/admin/users">
+          <i class="fa fa-user"></i> <span>Dashboard</span>
+        </a>
+      </li>
+
       <li class="treeview">
         <a href="#">
-          <i class="fa fa-files-o"></i>
+          <i class="fa fa-use"></i>
           <span>Layout Options</span>
           <span class="label label-primary pull-right">4</span>
         </a>

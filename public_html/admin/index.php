@@ -2,10 +2,16 @@
 require_once('/home/mhsa/includes/admin_include.php');
 $page_title = 'Home';
 $page_id = 1;
+
 include('sections/header.php');
 include('sections/sidebar.php');
 
 $num_users = getTotalNumberOfPlayers();
+$num_killed = getNumberOfKills();
+$num_alive = getNumberOfPlayersAlive();
+$num_suicided = getNumberOfPlayersSuicide();
+
+$killsPerDay = getKillsPerDay();
 ?>
 
 <!-- Content Wrapper. Contains page content -->
@@ -45,14 +51,14 @@ $num_users = getTotalNumberOfPlayers();
         <!-- small box -->
         <div class="small-box bg-green">
           <div class="inner">
-            <h3>53<sup style="font-size: 20px">%</sup></h3>
+            <h3><?=$num_killed?></h3>
 
-            <p>Bounce Rate</p>
+            <p>Users Assassinated</p>
           </div>
           <div class="icon">
-            <i class="ion ion-stats-bars"></i>
+            <i class="ion ion-pinpoint"></i>
           </div>
-          <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          <a href="/admin/users" class="small-box-footer">List Users <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
       <!-- ./col -->
@@ -60,12 +66,12 @@ $num_users = getTotalNumberOfPlayers();
         <!-- small box -->
         <div class="small-box bg-yellow">
           <div class="inner">
-            <h3>44</h3>
+            <h3><?=$num_alive?></h3>
 
-            <p>User Registrations</p>
+            <p>Players Alive</p>
           </div>
           <div class="icon">
-            <i class="ion ion-person-add"></i>
+            <i class="ion ion-heart"></i>
           </div>
           <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
@@ -75,9 +81,9 @@ $num_users = getTotalNumberOfPlayers();
         <!-- small box -->
         <div class="small-box bg-red">
           <div class="inner">
-            <h3>65</h3>
+            <h3><?=$num_suicided?></h3>
 
-            <p>Unique Visitors</p>
+            <p>Players Suicided</p>
           </div>
           <div class="icon">
             <i class="ion ion-pie-graph"></i>
@@ -92,21 +98,25 @@ $num_users = getTotalNumberOfPlayers();
     <div class="row">
       <!-- Left col -->
       <section class="col-lg-7 connectedSortable">
-        <!-- Custom tabs (Charts with tabs)-->
-        <div class="nav-tabs-custom">
-          <!-- Tabs within a box -->
-          <ul class="nav nav-tabs pull-right">
-            <li class="active"><a href="#revenue-chart" data-toggle="tab">Area</a></li>
-            <li><a href="#sales-chart" data-toggle="tab">Donut</a></li>
-            <li class="pull-left header"><i class="fa fa-inbox"></i> Sales</li>
-          </ul>
-          <div class="tab-content no-padding">
-            <!-- Morris chart - Sales -->
-            <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;"></div>
-            <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"></div>
+        <!-- Kills Per Day Table -->
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <h3 class="box-title">Area Chart</h3>
+
+            <div class="box-tools pull-right">
+              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
           </div>
+          <div class="box-body">
+            <div class="chart">
+              <canvas id="killsPerDayChart" style="height:250px"></canvas>
+            </div>
+          </div>
+          <!-- /.box-body -->
         </div>
-        <!-- /.nav-tabs-custom -->
+        <!-- /.box -->
 
         <!-- Chat box -->
         <div class="box box-success">
@@ -519,5 +529,76 @@ $num_users = getTotalNumberOfPlayers();
   </section>
   <!-- /.content -->
 </div>
+
+<script>
+  $(function () {
+    //--------------
+    //- AREA CHART -
+    //--------------
+
+    // Get context with jQuery - using jQuery's .get() method.
+    var areaChartCanvas = $("#killsPerDayChart").get(0).getContext("2d");
+    // This will get the first returned node in the jQuery collection.
+    var areaChart = new Chart(areaChartCanvas);
+
+    var areaChartData = {
+      labels: [<?= '"'.implode('", "' , array_column($killsPerDay, 'group_date')).'"'; ?>],
+      datasets: [
+        {
+          label: "Electronics",
+          fillColor: "rgba(210, 214, 222, 1)",
+          strokeColor: "rgba(210, 214, 222, 1)",
+          pointColor: "rgba(210, 214, 222, 1)",
+          pointStrokeColor: "#c1c7d1",
+          pointHighlightFill: "#fff",
+          pointHighlightStroke: "rgba(220,220,220,1)",
+          data: [<?=implode(', ' , array_column($killsPerDay, 'kills')); ?>]
+        }
+      ]
+    };
+
+    var areaChartOptions = {
+      //Boolean - If we should show the scale at all
+      showScale: true,
+      //Boolean - Whether grid lines are shown across the chart
+      scaleShowGridLines: false,
+      //String - Colour of the grid lines
+      scaleGridLineColor: "rgba(0,0,0,.05)",
+      //Number - Width of the grid lines
+      scaleGridLineWidth: 1,
+      //Boolean - Whether to show horizontal lines (except X axis)
+      scaleShowHorizontalLines: true,
+      //Boolean - Whether to show vertical lines (except Y axis)
+      scaleShowVerticalLines: true,
+      //Boolean - Whether the line is curved between points
+      bezierCurve: true,
+      //Number - Tension of the bezier curve between points
+      bezierCurveTension: 0.3,
+      //Boolean - Whether to show a dot for each point
+      pointDot: false,
+      //Number - Radius of each point dot in pixels
+      pointDotRadius: 4,
+      //Number - Pixel width of point dot stroke
+      pointDotStrokeWidth: 1,
+      //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+      pointHitDetectionRadius: 20,
+      //Boolean - Whether to show a stroke for datasets
+      datasetStroke: true,
+      //Number - Pixel width of dataset stroke
+      datasetStrokeWidth: 2,
+      //Boolean - Whether to fill the dataset with a color
+      datasetFill: true,
+      //String - A legend template
+      legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+      //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+      maintainAspectRatio: true,
+      //Boolean - whether to make the chart responsive to window resizing
+      responsive: true
+    };
+
+    //Create the line chart
+    areaChart.Line(areaChartData, areaChartOptions);
+  });
+</script>
 
 <?php include('sections/footer.php'); ?>

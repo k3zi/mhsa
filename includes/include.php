@@ -139,7 +139,7 @@ function checkIfBothTexted() {
 					DB::insert('kills', array(
 					  'eliminated' => $eliminated['user_id'],
 					  'killer' => $assassin['user_id'],
-						'time' => time()
+						'date' => time()
 					));
 
 					if($match = performMatch($assassin)) {
