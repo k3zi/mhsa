@@ -45,14 +45,14 @@ $users = DB::query('SELECT * FROM users');
                   </tr>
                   </thead>
                   <tbody>
-                    <?php foreach($users as $user) { ?>
-                  <tr>
-                    <td><?=$users['user_id']?></td>
-                    <td><?=$users['name']?></td>
-                    <td><?=$users['phone']?></td>
-                    <td><?=$users['email']?></td>
-                    <td><?=$users['twitter_name']?></td>
-                  </tr>
+                  <?php foreach($users as $user) { ?>
+                    <tr>
+                      <td><?=$user['user_id']?></td>
+                      <td><?=$user['name']?></td>
+                      <td><?=$user['phone']?></td>
+                      <td><?=$user['email']?></td>
+                      <td><?=$user['twitter_name']?></td>
+                    </tr>
                   <?php } ?>
                 </tbody>
                 </table>
