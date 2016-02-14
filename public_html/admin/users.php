@@ -6,7 +6,7 @@ $page_id = 2;
 include('sections/header.php');
 include('sections/sidebar.php');
 
-$users = DB::query('SELECT * FROM users');
+$users = DB::query('SELECT * FROM users ORDER BY user_id ASC');
 ?>
 
 <!-- Content Wrapper. Contains page content -->
@@ -63,5 +63,6 @@ $users = DB::query('SELECT * FROM users');
           </div>
         </div>
       </section>
+    </div>
 
 <?php include('sections/footer.php'); ?>
