@@ -1,4 +1,8 @@
 <?php
+echo $_SERVER['REMOTE_ADDR'];
+if()$_SERVER['REMOTE_ADDR'] != '') {
+	die('The site is currently down while we upgrade.... ;)');
+}
 require_once('db.class.php');
 require_once('vendor/autoload.php');
 require_once('twilio-php/Twilio.php');
