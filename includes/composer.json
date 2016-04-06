@@ -1,0 +1,6 @@
+{
+    "require": {
+        "abraham/twitteroauth": "^0.6.2",
+        "google/apiclient": "^2.0.0@RC"
+    }
+}
