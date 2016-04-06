@@ -103,7 +103,7 @@ if (isset($_REQUEST['From'])) {
             if (!MHSA_STARTED) {
                 $response = MHSA_RESPONSE_COMMAND_NOT_AVAIL;
             } else {
-                $target = getUser($assassin['target_id']);
+                $target = getUser($user['target_id']);
                 $response = 'Your target is: '.$target['name'];
             }
           break;
