@@ -1,3 +1,3 @@
 # Martin HS Assassins
 
-A game where people run arround slashing eachother with markers
+A game where people run around slashing each other with markers
