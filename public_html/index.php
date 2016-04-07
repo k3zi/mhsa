@@ -166,7 +166,7 @@ require_once('/home/mhsa/includes/include.php');
             <h3>2. No assassinating at your target's house or workplace (this includes anything on the property like the driveway)</h3>
             <h3>3. No assassinating targets in their vehicle</h3>
             <h3>4. No assassinating in any classroom at any time</h3>
-            <h3>5. A classroom can also be any event that is being superviezed by a teacher/coach. The studnet/player leaves the classrom when they leave the supervision of their teacher/coach.</h3>
+            <h3>5. A classroom can also be any event that is being supervised by a teacher/coach. The student/player leaves the classroom when they leave the supervision of their teacher/coach.</h3>
             <h3>6. No excessive physical contact in an effort to mark a target</h3>
             <h3>7. No assassinating office aids while they are on the job. They are also banned from assassinating while on the job.</h3>
             <h3>8. All assassinations are final. If you text "rip" you are acknowledging that it was a good kill</h3>
