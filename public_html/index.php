@@ -50,7 +50,7 @@ require_once('/home/mhsa/includes/include.php');
             <? } else { ?>
                 <div class="animated fadeInLeftBig" id="countdown"></div>
             <? } ?>
-            <p class="animated fadeInRightBig">Total Players: <?=getTotalNumberOfPlayers()?> | Alive: <?=getNumberOfPlayersAlive()?> | Dead: <?=getNumberOfPlayersDead()?> | Suicide: <?=getNumberOfPlayersSuicide()?></p>
+            <p class="animated fadeInRightBig">Total Players: <?=getTotalNumberOfPlayers()?> | Alive: <?=getNumberOfPlayersAlive()?> | Dead: <?=getNumberOfKills()?> | Suicide: <?=getNumberOfPlayersSuicide()?></p>
             <a data-scroll class="btn btn-start animated fadeInUpBig" href="#statistics-top">View Stats</a>
           </div>
         </div>
