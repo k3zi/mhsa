@@ -264,7 +264,7 @@ function checkUserDeathTexts($isAssassin, $userID) {
 			'date' => time()
 		));
 
-		$message = formatUsername($assassin).' has assassinated '.formatUsername($target);
+		$message = formatUsername($assassin).' has assassinated '.formatUsername($target)  '\n#GetDunkedOn';
 		log_text('TWEET --> '.$message);
 		if (MHSA_STARTED) {
 			postToTwitter($message);
