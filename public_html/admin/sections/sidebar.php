@@ -62,7 +62,7 @@ function activeFor($id) {
       <li class="treeview">
         <a href="#">
           <i class="fa fa-wrench"></i>
-          <span>Action</span>
+          <span>Actions</span>
           <i class="fa fa-angle-left pull-right"></i>
         </a>
 
