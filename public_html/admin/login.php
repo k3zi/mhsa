@@ -3,8 +3,8 @@ $isLogin = true;
 require_once('/home/mhsa/includes/admin_include.php');
 
 if (isset($_POST['submit'])) {
-  if ($_POST['username'] == MHSA_ADMIN_USER && $_POST['password'] == MHSA_ADMIN_PASS) {
-    $_SESSION['admin'] = 'mhsa_admin';
+  if ($_POST['username'] == SYSTEM_ADMIN_USER && $_POST['password'] == SYSTEM_ADMIN_PASS) {
+    $_SESSION['admin'] = 'system_admin';
     header('Location: /admin/');
     die();
   }

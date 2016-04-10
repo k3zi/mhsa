@@ -7,21 +7,21 @@ require_once('config.php');
 use Abraham\TwitterOAuth\TwitterOAuth;
 
 //Message Config
-define('MHSA_CONFIRM_MESSAGE', "Martin Assassins:\n\nPlease text back CONFIRM to verify your registration and agreement to the rules set forth on: https://mhsa.io");
-define('MHSA_RESPONSE_NEEDS_CONFIRM', "Text CONFIRM to verify your registration and agreement to the rules set forth on https://mhsa.io");
-define('MHSA_RESPONSE_ALREADY_CONFIRMED', "This phone has already been confirmed.");
-define('MHSA_RESPONSE_COMMAND_NOT_AVAIL', "This command is not yet available.");
-define('MHSA_RESPONSE_ALREADY_DEAD', "This command is only for active players. There is no resurrecting the dead #sorry");
-define('MHSA_RESPONSE_INVALID_COMMAND', "Invalid Command\n\nCheck on https://mhsa.io for text commands.");
-define('MHSA_RESPONSE_NO_ACCOUNT', "Martin Assassins\n\nThis phone isn't connected to an account.");
-define('MHSA_RESPONSE_WITHDRAW', "You have been withdrawn.");
-define('MHSA_RESPONSE_ADMIN_SENT', "Your message has been routed to an MHSA admin.");
+define('SYSTEM_CONFIRM_MESSAGE', "Martin Assassins:\n\nPlease text back CONFIRM to verify your registration and agreement to the rules set forth on: https://mhsa.io");
+define('SYSTEM_RESPONSE_NEEDS_CONFIRM', "Text CONFIRM to verify your registration and agreement to the rules set forth on https://mhsa.io");
+define('SYSTEM_RESPONSE_ALREADY_CONFIRMED', "This phone has already been confirmed.");
+define('SYSTEM_RESPONSE_COMMAND_NOT_AVAIL', "This command is not yet available.");
+define('SYSTEM_RESPONSE_ALREADY_DEAD', "This command is only for active players. There is no resurrecting the dead #sorry");
+define('SYSTEM_RESPONSE_INVALID_COMMAND', "Invalid Command\n\nCheck on https://mhsa.io for text commands.");
+define('SYSTEM_RESPONSE_NO_ACCOUNT', "Martin Assassins\n\nThis phone isn't connected to an account.");
+define('SYSTEM_RESPONSE_WITHDRAW', "You have been withdrawn.");
+define('SYSTEM_RESPONSE_ADMIN_SENT', "Your message has been routed to an MHSA admin.");
 
 //Settings
-define('MHSA_TIME_BETWEEN_COMMANDS', 60*5);
-define('MHSA_START_DATE_STRING', 'April 4th, 2016 7:00 AM');
-define('MHSA_LOG_FILE', '/home/mhsa/event_log.txt');
-define('MHSA_STARTED', true);
+define('SYSTEM_TIME_BETWEEN_COMMANDS', 60*5);
+define('SYSTEM_START_DATE_STRING', 'April 4th, 2016 7:00 AM');
+define('SYSTEM_LOG_FILE', '/home/mhsa/event_log.txt');
+define('SYSTEM_STARTED', true);
 
 //Setup Things
 
@@ -31,7 +31,7 @@ DB::$user = DB_USERNAME;
 DB::$password = DB_PASSWORD;
 DB::$dbName = DB_NAME;
 
-$MHSA_COMMANDS = array(
+$SYSTEM_COMMANDS = array(
 	'eliminated' => 'text when you assassinate your enemy',
 	'rip' => 'text when you are assassinated',
 	'suicide' => 'text to remove yourself after the game has started',
@@ -44,41 +44,41 @@ $MHSA_COMMANDS = array(
 session_start();
 
 //Fetch Functions
-define('MHSA_SQL_VALID_USER', 'users.is_blocked = 0 AND users.is_waiting = 0');
-define('MHSA_SQL_IS_ALIVE', 'LEFT JOIN kills ON users.user_id = kills.eliminated WHERE kills.kill_id IS NULL');
-define('MHSA_SQL_IS_NOT_ALIVE', 'LEFT JOIN kills ON users.user_id = kills.eliminated WHERE kills.kill_id IS NOT NULL');
-define('MHSA_SQL_IS_SUICIDE', 'LEFT JOIN kills ON users.user_id = kills.eliminated WHERE kills.killer = kills.eliminated AND kills.kill_id IS NOT NULL');
-define('MHSA_SQL_STATS_JOIN', 'LEFT JOIN kills k ON (users.user_id = k.killer AND k.eliminated != k.killer) LEFT JOIN kills d ON (users.user_id = d.eliminated AND d.eliminated != d.killer) LEFT JOIN kills s ON (users.user_id = s.eliminated AND s.eliminated = s.killer)');
+define('SYSTEM_SQL_VALID_USER', 'users.is_blocked = 0 AND users.is_waiting = 0');
+define('SYSTEM_SQL_IS_ALIVE', 'LEFT JOIN kills ON users.user_id = kills.eliminated WHERE kills.kill_id IS NULL');
+define('SYSTEM_SQL_IS_NOT_ALIVE', 'LEFT JOIN kills ON users.user_id = kills.eliminated WHERE kills.kill_id IS NOT NULL');
+define('SYSTEM_SQL_IS_SUICIDE', 'LEFT JOIN kills ON users.user_id = kills.eliminated WHERE kills.killer = kills.eliminated AND kills.kill_id IS NOT NULL');
+define('SYSTEM_SQL_STATS_JOIN', 'LEFT JOIN kills k ON (users.user_id = k.killer AND k.eliminated != k.killer) LEFT JOIN kills d ON (users.user_id = d.eliminated AND d.eliminated != d.killer) LEFT JOIN kills s ON (users.user_id = s.eliminated AND s.eliminated = s.killer)');
 
-$MHSA_NUM_PLAYERS_ALIVE = getNumberOfPlayersAlive();
+$SYSTEM_NUM_PLAYERS_ALIVE = getNumberOfPlayersAlive();
 
 function getUnblockedUsers() {
 	return getAllPlayers();
 }
 
 function getAllPlayers() {
-	return DB::query('SELECT * FROM users WHERE '.MHSA_SQL_VALID_USER);
+	return DB::query('SELECT * FROM users WHERE '.SYSTEM_SQL_VALID_USER);
 }
 
 function getAvailableAssassins() {
-	return DB::query("SELECT users.* FROM users ".MHSA_SQL_IS_ALIVE." AND ".MHSA_SQL_VALID_USER." AND users.target_id = -1 ORDER BY RAND()");
+	return DB::query("SELECT users.* FROM users ".SYSTEM_SQL_IS_ALIVE." AND ".SYSTEM_SQL_VALID_USER." AND users.target_id = -1 ORDER BY RAND()");
 }
 
 function getAvailableAssassin() {
-	return DB::queryFirstRow("SELECT users.* FROM users ".MHSA_SQL_IS_ALIVE." AND ".MHSA_SQL_VALID_USER." AND users.target_id = -1 ORDER BY RAND()");
+	return DB::queryFirstRow("SELECT users.* FROM users ".SYSTEM_SQL_IS_ALIVE." AND ".SYSTEM_SQL_VALID_USER." AND users.target_id = -1 ORDER BY RAND()");
 }
 
 function getUnavailableAssassin($user_id = -1) {
-	return DB::queryFirstRow("SELECT users.* FROM users ".MHSA_SQL_IS_ALIVE." AND ".MHSA_SQL_VALID_USER." AND users.target_id != -1 AND users.target_id != %d AND users.user_id != %d ORDER BY RAND()", $user_id, $user_id);
+	return DB::queryFirstRow("SELECT users.* FROM users ".SYSTEM_SQL_IS_ALIVE." AND ".SYSTEM_SQL_VALID_USER." AND users.target_id != -1 AND users.target_id != %d AND users.user_id != %d ORDER BY RAND()", $user_id, $user_id);
 }
 
 function getAvailableTrget($user_id = 0) {
 	if(getNumberOfPlayersAlive() == 2) {
 		//DEATH MATCH: They can be each other's targets
-		return DB::queryFirstRow("SELECT users.* FROM users ".MHSA_SQL_IS_ALIVE." AND ".MHSA_SQL_VALID_USER." AND user_id NOT IN (SELECT target_id FROM users ".MHSA_SQL_IS_ALIVE." AND ".MHSA_SQL_VALID_USER.") AND users.user_id != %d", $user_id);
+		return DB::queryFirstRow("SELECT users.* FROM users ".SYSTEM_SQL_IS_ALIVE." AND ".SYSTEM_SQL_VALID_USER." AND user_id NOT IN (SELECT target_id FROM users ".SYSTEM_SQL_IS_ALIVE." AND ".SYSTEM_SQL_VALID_USER.") AND users.user_id != %d", $user_id);
 	}
 
-	return DB::queryFirstRow("SELECT users.* FROM users ".MHSA_SQL_IS_ALIVE." AND ".MHSA_SQL_VALID_USER." AND user_id NOT IN (SELECT target_id FROM users ".MHSA_SQL_IS_ALIVE." AND ".MHSA_SQL_VALID_USER.") AND users.user_id != %d AND users.target_id != %d ORDER BY RAND()", $user_id, $user_id);
+	return DB::queryFirstRow("SELECT users.* FROM users ".SYSTEM_SQL_IS_ALIVE." AND ".SYSTEM_SQL_VALID_USER." AND user_id NOT IN (SELECT target_id FROM users ".SYSTEM_SQL_IS_ALIVE." AND ".SYSTEM_SQL_VALID_USER.") AND users.user_id != %d AND users.target_id != %d ORDER BY RAND()", $user_id, $user_id);
 }
 
 function getWaitlistUser() {
@@ -90,25 +90,25 @@ function getAssassinForUserID($user_id) {
 }
 
 function getUserByPhone($phone) {
-	return DB::queryFirstRow('SELECT users.*, COUNT(k.kill_id) AS num_kills, (d.kill_id IS NOT NULL) AS dead, (s.kill_id IS NOT NULL) AS suicide FROM users '.MHSA_SQL_STATS_JOIN.' WHERE users.phone = %s GROUP BY users.phone', $phone);
+	return DB::queryFirstRow('SELECT users.*, COUNT(k.kill_id) AS num_kills, (d.kill_id IS NOT NULL) AS dead, (s.kill_id IS NOT NULL) AS suicide FROM users '.SYSTEM_SQL_STATS_JOIN.' WHERE users.phone = %s GROUP BY users.phone', $phone);
 }
 
 function getUser($user_id) {
-	return DB::queryFirstRow('SELECT users.*, COUNT(k.kill_id) AS num_kills, (d.kill_id IS NOT NULL) AS dead, (s.kill_id IS NOT NULL) AS suicide FROM users '.MHSA_SQL_STATS_JOIN.' WHERE users.user_id = %d GROUP BY users.phone', $user_id);
+	return DB::queryFirstRow('SELECT users.*, COUNT(k.kill_id) AS num_kills, (d.kill_id IS NOT NULL) AS dead, (s.kill_id IS NOT NULL) AS suicide FROM users '.SYSTEM_SQL_STATS_JOIN.' WHERE users.user_id = %d GROUP BY users.phone', $user_id);
 }
 
 //Stats Function
 
 function getNumberOfPlayersDead() {
-	return DB::queryFirstField("SELECT COUNT(users.user_id) FROM users ".MHSA_SQL_IS_NOT_ALIVE." AND ".MHSA_SQL_VALID_USER);
+	return DB::queryFirstField("SELECT COUNT(users.user_id) FROM users ".SYSTEM_SQL_IS_NOT_ALIVE." AND ".SYSTEM_SQL_VALID_USER);
 }
 
 function getNumberOfPlayersAlive() {
-	return DB::queryFirstField("SELECT COUNT(users.user_id) FROM users ".MHSA_SQL_IS_ALIVE." AND ".MHSA_SQL_VALID_USER);
+	return DB::queryFirstField("SELECT COUNT(users.user_id) FROM users ".SYSTEM_SQL_IS_ALIVE." AND ".SYSTEM_SQL_VALID_USER);
 }
 
 function getNumberOfPlayersSuicide() {
-	return DB::queryFirstField("SELECT COUNT(users.user_id) FROM users ".MHSA_SQL_IS_SUICIDE." AND ".MHSA_SQL_VALID_USER);
+	return DB::queryFirstField("SELECT COUNT(users.user_id) FROM users ".SYSTEM_SQL_IS_SUICIDE." AND ".SYSTEM_SQL_VALID_USER);
 }
 
 function getNumberOfKills() {
@@ -116,12 +116,12 @@ function getNumberOfKills() {
 }
 
 function getTotalNumberOfPlayers() {
-	return DB::queryFirstField("SELECT COUNT(users.user_id) FROM users WHERE ".MHSA_SQL_VALID_USER);
+	return DB::queryFirstField("SELECT COUNT(users.user_id) FROM users WHERE ".SYSTEM_SQL_VALID_USER);
 }
 
 function getTop10Players($limit = 10) {
 	$limit = $limit > 0 ? ' LIMIT '.$limit : '';
-	return DB::query('SELECT users.name, users.twitter_name, COUNT(k.kill_id) AS num_kills, (d.kill_id IS NOT NULL) AS dead, (s.kill_id IS NOT NULL) AS suicide FROM users '.MHSA_SQL_STATS_JOIN.' WHERE '.MHSA_SQL_VALID_USER.' GROUP BY users.phone ORDER BY dead ASC, suicide ASC, num_kills DESC'.$limit);
+	return DB::query('SELECT users.name, users.twitter_name, COUNT(k.kill_id) AS num_kills, (d.kill_id IS NOT NULL) AS dead, (s.kill_id IS NOT NULL) AS suicide FROM users '.SYSTEM_SQL_STATS_JOIN.' WHERE '.SYSTEM_SQL_VALID_USER.' GROUP BY users.phone ORDER BY dead ASC, suicide ASC, num_kills DESC'.$limit);
 }
 
 //Handle Text Response
@@ -146,7 +146,7 @@ function userTextDidSuicide($user) {
 
 	$message = formatUsername($user).' has commited suicide #'.getRandomDeathTag();
 	log_text('TWEET --> '.$message);
-	if (MHSA_STARTED) {
+	if (SYSTEM_STARTED) {
 		postToTwitter($message);
 	}
 
@@ -243,9 +243,9 @@ function checkUserDeathTexts($isAssassin, $userID) {
 	$targetTextedInTime = false;
 
 	$assassinTexted = $assassin['text_eliminated'] > 0;
-	$assassinTextedInTime = $assassinTexted && (time() - $assassin['text_eliminated']) <= MHSA_TIME_BETWEEN_COMMANDS;
+	$assassinTextedInTime = $assassinTexted && (time() - $assassin['text_eliminated']) <= SYSTEM_TIME_BETWEEN_COMMANDS;
 	$targetTexted = $target['text_rip'] > 0;
-	$targetTextedInTime = $targetTexted && (time() - $target['text_rip']) <= MHSA_TIME_BETWEEN_COMMANDS;
+	$targetTextedInTime = $targetTexted && (time() - $target['text_rip']) <= SYSTEM_TIME_BETWEEN_COMMANDS;
 
 	if ($assassinTextedInTime && $targetTextedInTime) {
 		DB::update('users', array(
@@ -266,7 +266,7 @@ function checkUserDeathTexts($isAssassin, $userID) {
 
 		$message = formatUsername($assassin).' has assassinated '.formatUsername($target);
 		log_text('TWEET --> '.$message);
-		if (MHSA_STARTED) {
+		if (SYSTEM_STARTED) {
 			postToTwitter($message);
 		}
 
@@ -299,7 +299,7 @@ function checkUserDeathTexts($isAssassin, $userID) {
 		$message = 'Time Between Texts Was Too Long';
 		log_text('SEND --> '.$target['name'].': '.$message);
 		log_text('SEND --> '.$assassin['name'].': '.$message);
-		if (MHSA_STARTED) {
+		if (SYSTEM_STARTED) {
 			singleSMS($target['phone'], $message);
 			singleSMS($assassin['phone'], $message);
 		}
@@ -314,7 +314,7 @@ function checkUserDeathTexts($isAssassin, $userID) {
 
 		$message = 'Your target did not text in time';
 		log_text('SEND --> '.$assassin['name'].': '.$message);
-	    if (MHSA_STARTED) {
+	    if (SYSTEM_STARTED) {
 	        singleSMS($assassin['phone'], $message);
 	    }
 	} else if ($targetTexted && !$targetTextedInTime) {
@@ -328,7 +328,7 @@ function checkUserDeathTexts($isAssassin, $userID) {
 
 		$message = 'Your assassin did not text in time';
 		log_text('SEND --> '.$target['name'].': '.$message);
-		if (MHSA_STARTED) {
+		if (SYSTEM_STARTED) {
 	        singleSMS($target['phone'], $message);
 	    }
 	}
@@ -339,7 +339,7 @@ function sendUserMatch($assassin, $match) {
 	$callLink = getPrankCallForUser($randomUser);
 
 	log_text('SEND --> '.$assassin['name'].': You have been assigned: '.$match['name']);
-	if (MHSA_STARTED) {
+	if (SYSTEM_STARTED) {
 		singleSMS($assassin['phone'], 'You have been assigned: '.$match['name']);
 		if ($callLink && $randomUser) {
 			singleCall($randomUser['phone'], $callLink);
@@ -357,7 +357,7 @@ function handleVictory($user) {
 
 	log_text('SEND --> '.$user['name'].': '.$twitterMessage);
 	log_text('TWEET --> '.$twitterMessage);
-	if (MHSA_STARTED) {
+	if (SYSTEM_STARTED) {
 		singleSMS($user['phone'], $message);
 		postToTwitter($twitterMessage);
 	}
@@ -499,7 +499,7 @@ function startsWith($haystack, $needle) {
 }
 
 function formatUserStatus($user) {
-	global $MHSA_NUM_PLAYERS_ALIVE;
+	global $SYSTEM_NUM_PLAYERS_ALIVE;
 
 	if ($user['dead']) {
 		return 'Dead';
@@ -509,7 +509,7 @@ function formatUserStatus($user) {
 		return 'Suicide';
 	}
 
-	if ($MHSA_NUM_PLAYERS_ALIVE == 1) {
+	if ($SYSTEM_NUM_PLAYERS_ALIVE == 1) {
 		return 'Winner';
 	}
 
@@ -538,5 +538,5 @@ function formatUsernameHTML($user) {
 
 function log_text($text) {
 	$text = date('F j, Y @ G:i:s A').'  -  '.$text.PHP_EOL;
-	file_put_contents(MHSA_LOG_FILE, $text , FILE_APPEND);
+	file_put_contents(SYSTEM_LOG_FILE, $text , FILE_APPEND);
 }

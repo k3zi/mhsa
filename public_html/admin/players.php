@@ -6,7 +6,7 @@ $page_id = 3;
 include('sections/header.php');
 include('sections/sidebar.php');
 
-$users = DB::query('SELECT users.*, targetUsers.name as target, COUNT(k.kill_id) AS num_kills, (d.kill_id IS NOT NULL) AS dead, (s.kill_id IS NOT NULL) AS suicide FROM users '.MHSA_SQL_STATS_JOIN.' LEFT JOIN users targetUsers ON users.target_id = targetUsers.user_id WHERE '.MHSA_SQL_VALID_USER.' GROUP BY users.phone');
+$users = DB::query('SELECT users.*, targetUsers.name as target, COUNT(k.kill_id) AS num_kills, (d.kill_id IS NOT NULL) AS dead, (s.kill_id IS NOT NULL) AS suicide FROM users '.SYSTEM_SQL_STATS_JOIN.' LEFT JOIN users targetUsers ON users.target_id = targetUsers.user_id WHERE '.SYSTEM_SQL_VALID_USER.' GROUP BY users.phone');
 ?>
 
 <style>

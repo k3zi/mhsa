@@ -13,7 +13,7 @@ if (strpos($signature, '=') == false)
 list($algorithm, $hash) = explode('=', $signature, 2);
 $payload = file_get_contents('php://input');
 
-$hashAnswer = hash_hmac($algorithm, $payload, MHSA_GITHUB_HOOK_PASS);
+$hashAnswer = hash_hmac($algorithm, $payload, SYSTEM_GITHUB_HOOK_PASS);
 
 if ($hashAnswer != $hash) {
     die('Algo: '.$algorithm."\n\n".$hashAnswer.'   !=   '.$hash);

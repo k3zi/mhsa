@@ -45,7 +45,7 @@ require_once(substr(getcwd(), 0, strpos(getcwd(), 'public_html')).'includes/incl
           <div class="caption">
             <h1 class="animated fadeInLeftBig">Welcome to <span>MHS Assassins</span></h1>
             <p class="animated fadeInRightBig">Martin High School - Senior Class - Last One Standing Wins</p>
-            <? if (MHSA_STARTED) { ?>
+            <? if (SYSTEM_STARTED) { ?>
                 <p class="animated fadeInLeftBig"><a href="https://twitter.com/MartinAssassins">The Game Has Begun</a></p>
             <? } else { ?>
                 <div class="animated fadeInLeftBig" id="countdown"></div>
@@ -192,7 +192,7 @@ require_once(substr(getcwd(), 0, strpos(getcwd(), 'public_html')).'includes/incl
             <div class="single-table wow flipInY" data-wow-duration="1000ms" data-wow-delay="300ms">
               <h3>Start/End</h3>
               <ul>
-                <li>> The game starts <?=MHSA_START_DATE_STRING?></li><br>
+                <li>> The game starts <?=SYSTEM_START_DATE_STRING?></li><br>
                 <li>> The game ends when there is only one man left</li>
               </ul>
             </div>
@@ -228,7 +228,7 @@ require_once(substr(getcwd(), 0, strpos(getcwd(), 'public_html')).'includes/incl
             <div class="single-table wow flipInY" data-wow-duration="1000ms" data-wow-delay="1100ms">
               <h3>Commands</h3>
               <ul>
-                <?php foreach ($MHSA_COMMANDS as $command => $info) { ?>
+                <?php foreach ($SYSTEM_COMMANDS as $command => $info) { ?>
                     <li><strong><?=$command?></strong> - <?=$info?></li>
                 <?php } ?>
               </ul>
@@ -342,7 +342,7 @@ require_once(substr(getcwd(), 0, strpos(getcwd(), 'public_html')).'includes/incl
 
   <script>
   $(function() {
-    $("#countdown").countdown("<?=date('Y/m/d H:i:s', strtotime(MHSA_START_DATE_STRING))?>", function(event) {
+    $("#countdown").countdown("<?=date('Y/m/d H:i:s', strtotime(SYSTEM_START_DATE_STRING))?>", function(event) {
         $(this).text(event.strftime('%D days | %H hours | %M minutes | %S seconds'));
     });
 

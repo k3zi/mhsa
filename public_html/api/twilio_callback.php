@@ -3,16 +3,16 @@
 require_once '/home/mhsa/includes/include.php';
 
 $commandsResponse = array();
-foreach ($MHSA_COMMANDS as $command => $info) {
+foreach ($SYSTEM_COMMANDS as $command => $info) {
     $commandsResponse[] = $command." - ".$info;
 }
 $commandsResponse = implode("\n\n", $commandsResponse);
 
 function proccessAdminMessage($phone, $message, $name = "Not Registered") {
-    global $MHSA_ADMIN_PHONES;
+    global $SYSTEM_ADMIN_PHONES;
 
     $message = trim(substr($message, strpos($message, ':') + 1));
-    foreach($MHSA_ADMIN_PHONES as $adminPhone) {
+    foreach($SYSTEM_ADMIN_PHONES as $adminPhone) {
         singleSMS($adminPhone, $phone.' ('.$name.')'.":\n\n".$message);
     }
 }
@@ -32,13 +32,13 @@ $message = trim($message->body);
 if ($user = getUserByPhone($phone)) {
     if (startsWith(strtoupper($message), 'MSG:')) {
         proccessAdminMessage($phone, $message, $user['name']);
-        return singleSMS($phone, MHSA_RESPONSE_ADMIN_SENT);
+        return singleSMS($phone, SYSTEM_RESPONSE_ADMIN_SENT);
     }
 
     if($user['waiting_name']) {
         if(strtoupper($message) == "WITHDRAW") {
             DB::delete('users', "user_id=%d", $user['user_id']);
-            return singleSMS($phone, MHSA_RESPONSE_WITHDRAW);
+            return singleSMS($phone, SYSTEM_RESPONSE_WITHDRAW);
         }
 
         $names = explode(" ", $message);
@@ -60,38 +60,38 @@ if ($user = getUserByPhone($phone)) {
 
     switch (strtoupper($message)) {
       case 'CONFIRM':
-        $response = MHSA_RESPONSE_ALREADY_CONFIRMED;
+        $response = SYSTEM_RESPONSE_ALREADY_CONFIRMED;
       break;
 
       case 'TOP':
-        $response = MHSA_RESPONSE_COMMAND_NOT_AVAIL;
+        $response = SYSTEM_RESPONSE_COMMAND_NOT_AVAIL;
       break;
 
       case 'ELIMINATED':
-        if (!MHSA_STARTED) {
-            $response = MHSA_RESPONSE_COMMAND_NOT_AVAIL;
+        if (!SYSTEM_STARTED) {
+            $response = SYSTEM_RESPONSE_COMMAND_NOT_AVAIL;
         } else if ($user['dead'] || $user['suicide']) {
-            $response = MHSA_RESPONSE_ALREADY_DEAD;
+            $response = SYSTEM_RESPONSE_ALREADY_DEAD;
         } else {
             userTextedDidEliminate($user);
         }
       break;
 
       case 'RIP':
-        if (!MHSA_STARTED) {
-            $response = MHSA_RESPONSE_COMMAND_NOT_AVAIL;
+        if (!SYSTEM_STARTED) {
+            $response = SYSTEM_RESPONSE_COMMAND_NOT_AVAIL;
         } else if ($user['dead'] || $user['suicide']) {
-            $response = MHSA_RESPONSE_ALREADY_DEAD;
+            $response = SYSTEM_RESPONSE_ALREADY_DEAD;
         } else {
             userTextedWasAssassinated($user);
         }
       break;
 
       case 'SUICIDE':
-        if (!MHSA_STARTED) {
-            $response = MHSA_RESPONSE_COMMAND_NOT_AVAIL;
+        if (!SYSTEM_STARTED) {
+            $response = SYSTEM_RESPONSE_COMMAND_NOT_AVAIL;
         } else if ($user['dead'] || $user['suicide']) {
-            $response = MHSA_RESPONSE_ALREADY_DEAD;
+            $response = SYSTEM_RESPONSE_ALREADY_DEAD;
         } else {
             userTextDidSuicide($user);
         }
@@ -100,7 +100,7 @@ if ($user = getUserByPhone($phone)) {
       case 'STATUS':
         $response = '';
         $response .= "\n".'Name: '.$user['name'];
-        if (MHSA_STARTED) {
+        if (SYSTEM_STARTED) {
             $response .= "\n".'Status: '.formatUserStatus($user);
             $response .= "\n"."Kills: ".$user['num_kills'];
         } else {
@@ -109,8 +109,8 @@ if ($user = getUserByPhone($phone)) {
       break;
 
       case 'TARGET':
-        if (!MHSA_STARTED) {
-            $response = MHSA_RESPONSE_COMMAND_NOT_AVAIL;
+        if (!SYSTEM_STARTED) {
+            $response = SYSTEM_RESPONSE_COMMAND_NOT_AVAIL;
         } else {
             $target = getUser($user['target_id']);
             $response = 'Your target is: '.$target['name'];
@@ -118,7 +118,7 @@ if ($user = getUserByPhone($phone)) {
       break;
 
       case 'RANK':
-        $response = MHSA_RESPONSE_COMMAND_NOT_AVAIL;
+        $response = SYSTEM_RESPONSE_COMMAND_NOT_AVAIL;
       break;
 
       case 'COMMANDS':
@@ -126,21 +126,21 @@ if ($user = getUserByPhone($phone)) {
       break;
 
       case 'WITHDRAW':
-        if (!MHSA_STARTED) {
+        if (!SYSTEM_STARTED) {
           DB::delete('users', "user_id=%d", $user['user_id']);
-          $response = MHSA_RESPONSE_WITHDRAW;
+          $response = SYSTEM_RESPONSE_WITHDRAW;
         } else {
           $response = 'The game has already started. Withdraw has been replaced with suicide #WhatAWasteOfLife';
         }
       break;
 
       default:
-        $response = MHSA_RESPONSE_INVALID_COMMAND;
+        $response = SYSTEM_RESPONSE_INVALID_COMMAND;
       break;
     }
 } else {
     if (startsWith(strtoupper($message), 'ALL:')) {
-        if (in_array($phone, $MHSA_ADMIN_PHONES)) {
+        if (in_array($phone, $SYSTEM_ADMIN_PHONES)) {
             $message = trim(substr($message, strpos($message, ':') + 1));
             foreach (DB::query('SELECT * FROM users WHERE is_blocked = 0 AND waiting_name = 0 AND LENGTH(phone) > 0') as $user) {
                 try {
@@ -151,9 +151,9 @@ if ($user = getUserByPhone($phone)) {
             }
         }
     } else if (startsWith(strtoupper($message), 'ALIVE:')) {
-        if (in_array($phone, $MHSA_ADMIN_PHONES)) {
+        if (in_array($phone, $SYSTEM_ADMIN_PHONES)) {
             $message = trim(substr($message, strpos($message, ':') + 1));
-            foreach (DB::query("SELECT users.* FROM users ".MHSA_SQL_IS_ALIVE." AND ".MHSA_SQL_VALID_USER) as $user) {
+            foreach (DB::query("SELECT users.* FROM users ".SYSTEM_SQL_IS_ALIVE." AND ".SYSTEM_SQL_VALID_USER) as $user) {
                 try {
                     singleSMS($user['phone'], $message);
                 } catch (Exception $e) {
@@ -170,7 +170,7 @@ if ($user = getUserByPhone($phone)) {
           break;
 
           default:
-            $response = MHSA_RESPONSE_NO_ACCOUNT;
+            $response = SYSTEM_RESPONSE_NO_ACCOUNT;
           break;
         }
     }

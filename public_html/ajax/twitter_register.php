@@ -40,7 +40,7 @@ DB::insert('users', array(
 ));
 
 if(DB::insertId() > 0) {
-  singleSMS($phone, MHSA_CONFIRM_MESSAGE);
+  singleSMS($phone, SYSTEM_CONFIRM_MESSAGE);
   die('0');
 }
 
