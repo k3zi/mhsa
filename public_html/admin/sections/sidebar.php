@@ -42,6 +42,7 @@ function activeFor($id) {
           <span>Players</span>
           <i class="fa fa-angle-left pull-right"></i>
         </a>
+
         <ul class="treeview-menu">
             <li<?=activeFor(3)?>>
               <a href="/admin/players">
@@ -52,6 +53,29 @@ function activeFor($id) {
             <li<?=activeFor(4)?>>
               <a href="/admin/alivePlayers">
                 <i class="fa fa-circle-o"></i> <span>Alive</span>
+              </a>
+            </li>
+        </ul>
+      </li>
+
+
+      <li class="treeview">
+        <a href="#">
+          <i class="fa fa-wrench"></i>
+          <span>Action</span>
+          <i class="fa fa-angle-left pull-right"></i>
+        </a>
+
+        <ul class="treeview-menu">
+            <li>
+              <a href="/admin/shuffleMatchups">
+                <i class="fa fa-circle-o"></i> <span>Shuffle Matchups</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="/admin/sendMatchups">
+                <i class="fa fa-circle-o"></i> <span>Send Matchups</span>
               </a>
             </li>
         </ul>
