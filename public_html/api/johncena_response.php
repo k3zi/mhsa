@@ -1,5 +1,10 @@
-<?php header("content-type: text/xml"); ?>
-<?xml version="1.0" encoding="utf-8"?>
+<?php
+require_once(substr(getcwd(), 0, strpos(getcwd(), 'public_html')).'includes/config.php');
+
+header("content-type: text/xml");
+echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+?>
+
 <Response>
   <Pause length="2"/>
   <Say>An assassin is after you</Say>
