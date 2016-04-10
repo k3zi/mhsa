@@ -1,5 +1,5 @@
 <?php
-require_once('/home/mhsa/includes/config.php');
+require_once(substr(getcwd(), 0, strpos(getcwd(), 'public_html')).'includes/config.php');
 
 if (!isset ($_SERVER['HTTP_X_GITHUB_EVENT']))
     die('-1');
