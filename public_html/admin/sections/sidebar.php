@@ -36,16 +36,25 @@ function activeFor($id) {
         </a>
       </li>
 
-      <li<?=activeFor(3)?>>
-        <a href="/admin/players">
-          <i class="fa fa-user"></i> <span>All Players</span>
+      <li class="treeview">
+        <a href="#">
+          <i class="fa fa-user"></i>
+          <span>Players</span>
+          <i class="fa fa-angle-left pull-right"></i>
         </a>
-      </li>
+        <ul class="treeview-menu">
+            <li<?=activeFor(3)?>>
+              <a href="/admin/players">
+                <i class="fa fa-circle-o"></i> <span>All</span>
+              </a>
+            </li>
 
-      <li<?=activeFor(4)?>>
-        <a href="/admin/alivePlayers">
-          <i class="fa fa-user"></i> <span>Alive Players</span>
-        </a>
+            <li<?=activeFor(4)?>>
+              <a href="/admin/alivePlayers">
+                <i class="fa fa-circle-o"></i> <span>Alive</span>
+              </a>
+            </li>
+        </ul>
       </li>
     </ul>
   </section>
