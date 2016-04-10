@@ -10,7 +10,7 @@ require_once(substr(getcwd(), 0, strpos(getcwd(), 'public_html')).'includes/incl
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>MHS Assassins</title>
+  <title><?php echo SYSTEM_SITE_NAME; ?></title>
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/animate.min.css" rel="stylesheet">
   <link href="css/font-awesome.min.css" rel="stylesheet">
@@ -43,7 +43,7 @@ require_once(substr(getcwd(), 0, strpos(getcwd(), 'public_html')).'includes/incl
           -o-background-size: cover;
           background-size: cover;">
           <div class="caption">
-            <h1 class="animated fadeInLeftBig">Welcome to <span>MHS Assassins</span></h1>
+            <h1 class="animated fadeInLeftBig">Welcome to <span><?php echo SYSTEM_SITE_NAME; ?></span></h1>
             <p class="animated fadeInRightBig">Martin High School - Senior Class - Last One Standing Wins</p>
             <? if (SYSTEM_STARTED) { ?>
                 <p class="animated fadeInLeftBig"><a href="https://twitter.com/MartinAssassins">The Game Has Begun</a></p>
@@ -317,7 +317,7 @@ require_once(substr(getcwd(), 0, strpos(getcwd(), 'public_html')).'includes/incl
     <div class="footer-top wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
       <div class="container text-center">
         <div class="footer-logo ">
-          <center><a href="index.html" class = "white"><img class="img-responsive" src="images/logo.png" alt="">MHS ASSASSINS 2016</a></center>
+          <center><a href="index.html" class = "white"><img class="img-responsive" src="images/logo.png" alt=""><?php echo SYSTEM_SITE_NAME; ?> 2016</a></center>
         </div>
         <div class="social-icons">
           <ul>

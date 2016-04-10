@@ -18,7 +18,7 @@ $username = $_SESSION['twitter_name'];
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>MHS Assassins</title>
+  <title><?php echo SYSTEM_SITE_NAME; ?></title>
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/animate.min.css" rel="stylesheet">
   <link href="css/font-awesome.min.css" rel="stylesheet">
@@ -112,7 +112,7 @@ $username = $_SESSION['twitter_name'];
     <div class="footer-top wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
       <div class="container text-center">
         <div class="footer-logo ">
-          <center><a href="index.html" class = "white"><img class="img-responsive" src="images/logo.png" alt="">MHS ASSASSINS 2016</a></center>
+          <center><a href="index.html" class = "white"><img class="img-responsive" src="images/logo.png" alt=""><?php echo SYSTEM_SITE_NAME; ?> 2016</a></center>
         </div>
         <div class="social-icons">
           <ul>
