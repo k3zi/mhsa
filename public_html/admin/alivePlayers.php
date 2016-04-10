@@ -79,7 +79,7 @@ td, th {
                       <a class="btn btn-primary" href="/admin/userTextedDidEliminate?userID=<?=$user['user_id']?>">eliminated</a>
                       &nbsp;&nbsp;|&nbsp;&nbsp;
                       <a class="btn btn-primary" href="/admin/userTextedWasAssassinated?userID=<?=$user['user_id']?>">rip</a>
-                      <br>
+                      <hr>
                       <a class="btn btn-primary" href="/admin/userTextDidSuicide?userID=<?=$user['user_id']?>">suicide</a>
                       &nbsp;&nbsp;|&nbsp;&nbsp;
                       <a class="btn btn-primary" href="/admin/userForceWithdraw?userID=<?=$user['user_id']?>">withdraw</a>
