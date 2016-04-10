@@ -36,7 +36,6 @@ td, th {
                 <th>ID</th>
                 <th>Name</th>
                 <th>Target</th>
-                <th>Status</th>
                 <th>Kills</th>
                 <th>Phone</th>
                 <th>Commands</th>
@@ -48,7 +47,6 @@ td, th {
                   <td><?=$user['user_id']?></td>
                   <td><?=$user['name']?></td>
                   <td><?=$user['target']?></td>
-                  <td><?=formatUserStatus($user)?></td>
                   <td><?=$user['num_kills']?></td>
                   <td>
                       <?=$user['phone']?>
@@ -79,7 +77,7 @@ td, th {
                       <a class="btn btn-primary" href="/admin/userTextedDidEliminate?userID=<?=$user['user_id']?>">eliminated</a>
                       &nbsp;&nbsp;|&nbsp;&nbsp;
                       <a class="btn btn-primary" href="/admin/userTextedWasAssassinated?userID=<?=$user['user_id']?>">rip</a>
-                      <hr>
+                      <hr style="margin-top: 10px; margin-bottom: 10px;">
                       <a class="btn btn-primary" href="/admin/userTextDidSuicide?userID=<?=$user['user_id']?>">suicide</a>
                       &nbsp;&nbsp;|&nbsp;&nbsp;
                       <a class="btn btn-primary" href="/admin/userForceWithdraw?userID=<?=$user['user_id']?>">withdraw</a>
