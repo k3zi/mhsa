@@ -1,6 +1,6 @@
 <?php
 if (SYSTEM_STARTED) {
-    die();
+    die('The game has already started');
 }
 
 require_once(substr(getcwd(), 0, strpos(getcwd(), 'public_html')).'includes/include.php');
