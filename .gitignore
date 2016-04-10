@@ -25,4 +25,3 @@ public_html/api/error_log
 public_html/ajax/error_log
 
 includes/config.php
-public_html/api/273*.php
