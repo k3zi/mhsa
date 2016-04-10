@@ -1,7 +1,7 @@
 <?php
 header('Location: /');
 die();
-require_once('/home/mhsa/includes/include.php');
+require_once(substr(getcwd(), 0, strpos(getcwd(), 'public_html')).'includes/include.php');
 
 $name = trim($_POST['name']);
 $email = trim($_POST['email']);

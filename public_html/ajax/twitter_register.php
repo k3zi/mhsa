@@ -1,7 +1,7 @@
 <?php
 header('Location: /');
 die();
-require_once('/home/mhsa/includes/include.php');
+require_once(substr(getcwd(), 0, strpos(getcwd(), 'public_html')).'includes/include.php');
 
 if(!isset($_SESSION['twitter_id'])) {
   die('-1');

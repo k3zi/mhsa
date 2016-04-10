@@ -1,5 +1,5 @@
 <?php
-require_once('/home/mhsa/includes/include.php');
+require_once(substr(getcwd(), 0, strpos(getcwd(), 'public_html')).'includes/include.php');
 ?>
 
 <!-- Hello troll. If you think that somehow looking through this source code will allow you to find your assassin, you're WRONG. Go back to doing your regulars algebra homework because you obviously don't have the knowledge to realize that what you are doing is futile.-->

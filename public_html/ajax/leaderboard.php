@@ -1,5 +1,5 @@
 <?php
-require_once('/home/mhsa/includes/include.php');
+require_once(substr(getcwd(), 0, strpos(getcwd(), 'public_html')).'includes/include.php');
 
 $leaderbaord = array();
 foreach(getTop10Players(-1) as $user) {
