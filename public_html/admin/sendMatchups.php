@@ -8,7 +8,7 @@ foreach ($users as $user) {
     echo $assassin['phone'].PHP_EOL;
     echo $user['phone'].PHP_EOL;
     try {
-        //sendUserMatch($assassin, $user);
+        sendUserMatch($assassin, $user);
     } catch (Exception $e) {
         print_r($e);
     }
