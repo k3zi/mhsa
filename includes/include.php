@@ -7,20 +7,18 @@ require_once('config.php');
 use Abraham\TwitterOAuth\TwitterOAuth;
 
 //Message Config
-define('SYSTEM_CONFIRM_MESSAGE', "Martin Assassins:\n\nPlease text back CONFIRM to verify your registration and agreement to the rules set forth on: https://mhsa.io");
-define('SYSTEM_RESPONSE_NEEDS_CONFIRM', "Text CONFIRM to verify your registration and agreement to the rules set forth on https://mhsa.io");
+define('SYSTEM_CONFIRM_MESSAGE', SYSTEM_SITE_NAME.":\n\nPlease text back CONFIRM to verify your registration and agreement to the rules set forth on: ".SYSTEM_SITE_URL);
+define('SYSTEM_RESPONSE_NEEDS_CONFIRM', "Text CONFIRM to verify your registration and agreement to the rules set forth on ".SYSTEM_SITE_URL);
 define('SYSTEM_RESPONSE_ALREADY_CONFIRMED', "This phone has already been confirmed.");
 define('SYSTEM_RESPONSE_COMMAND_NOT_AVAIL', "This command is not yet available.");
 define('SYSTEM_RESPONSE_ALREADY_DEAD', "This command is only for active players. There is no resurrecting the dead #sorry");
-define('SYSTEM_RESPONSE_INVALID_COMMAND', "Invalid Command\n\nCheck on https://mhsa.io for text commands.");
+define('SYSTEM_RESPONSE_INVALID_COMMAND', "Invalid Command\n\nCheck on ".SYSTEM_SITE_URL." for text commands.");
 define('SYSTEM_RESPONSE_NO_ACCOUNT', "Martin Assassins\n\nThis phone isn't connected to an account.");
 define('SYSTEM_RESPONSE_WITHDRAW', "You have been withdrawn.");
-define('SYSTEM_RESPONSE_ADMIN_SENT', "Your message has been routed to an MHSA admin.");
+define('SYSTEM_RESPONSE_ADMIN_SENT', "Your message has been routed to an ".SYSTEM_SITE_NAME_SHORT." admin.");
 
-//Settings
 define('SYSTEM_TIME_BETWEEN_COMMANDS', 60*5);
 define('SYSTEM_START_DATE_STRING', 'April 4th, 2016 7:00 AM');
-define('SYSTEM_LOG_FILE', '/home/mhsa/event_log.txt');
 define('SYSTEM_STARTED', true);
 
 //Setup Things
@@ -352,8 +350,8 @@ function sendUserMatch($assassin, $match) {
 }
 
 function handleVictory($user) {
-	$message = 'Congratulations on winning MHS Assassins 2k16!';
-	$twitterMessage = 'Congratulations '.formatUsername($user).' on winning MHS Assassins 2k16!';
+	$message = 'Congratulations on winning '.SYSTEM_SITE_NAME.' '.SYSTEM_YEAR.'!';
+	$twitterMessage = 'Congratulations '.formatUsername($user).' on winning '.SYSTEM_SITE_NAME.' '.SYSTEM_YEAR.'!';
 
 	log_text('SEND --> '.$user['name'].': '.$twitterMessage);
 	log_text('TWEET --> '.$twitterMessage);
@@ -454,7 +452,7 @@ function singleCall($to, $url) {
 }
 
 function getPrankCallForUser($user) {
-	$responses = ['https://mhsa.io/api/johncena_response.xml', 'https://mhsa.io/api/taken_response.xml', 'https://mhsa.io/api/deeznuts_response.xml'];
+	$responses = [SYSTEM_SITE_URL.'/api/johncena_response.php', SYSTEM_SITE_URL.'/api/taken_response.php', SYSTEM_SITE_URL.'/api/deeznuts_response.php'];
 	$userPrankCallIndex = (int)$user['prank_call_index'];
 	if ($userPrankCallIndex < count($responses)) {
 		DB::update('users', array(
@@ -484,7 +482,8 @@ function autoFollow($oauth_token, $oauth_token_secret) {
 }
 
 function postToTwitter($message) {
-	$message = $message.' #MHSAssassins2k16';
+	$tag = str_replace(' ', '', SYSTEM_SITE_NAME.SYSTEM_YEAR);
+	$message = $message.' #'.$tag;
 	if(strlen($message) > 140) {
 		return false;
 	}

@@ -167,7 +167,7 @@ $username = $_SESSION['twitter_name'];
             							$('#success > .alert-danger').append('</div>');
             						break;
             						case "0":
-            							window.location.replace("https://mhsa.io/complete");
+            							window.location.replace("<?php echo SYSTEM_SITE_URL; ?>/complete");
             						break;
             						case "1": // phone invalid
             							$('#success').html("<div class='alert alert-danger'>");

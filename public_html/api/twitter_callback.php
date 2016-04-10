@@ -7,7 +7,7 @@ $request_token['oauth_token'] = $_SESSION['oauth_token'];
 $request_token['oauth_token_secret'] = $_SESSION['oauth_token_secret'];
 
 if (isset($_REQUEST['oauth_token']) && $request_token['oauth_token'] !== $_REQUEST['oauth_token']) {
-  header('Location: https://mhsa.io');
+  header('Location: '.SYSTEM_SITE_URL);
   exit();
 }
 

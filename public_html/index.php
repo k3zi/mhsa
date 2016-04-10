@@ -303,7 +303,7 @@ require_once(substr(getcwd(), 0, strpos(getcwd(), 'public_html')).'includes/incl
                 <p>The creators of assassins are trying our best to create the best experience possible, but if we get anything wrong, just let us know!</p>
                 <ul class="address">
                   <li><i class="fa fa-phone"></i> <span> Phone:</span> (817) 200-7256  | Use the 'msg: ' command above</li>
-                  <li><i class="fa fa-envelope"></i> <span> Email:</span><a href="mailto:admin@mhsa.io"> admin@mhsa.io</a></li>
+                  <li><i class="fa fa-envelope"></i> <span> Email:</span><a href="mailto:<?php echo SYSTEM_ADMIN_EMAIL; ?>"> <?php echo SYSTEM_ADMIN_EMAIL; ?></a></li>
                 </ul>
               </div>
             </div>
