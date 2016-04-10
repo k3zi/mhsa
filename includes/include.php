@@ -332,19 +332,19 @@ function checkUserDeathTexts($isAssassin, $userID) {
 	}
 }
 
-function sendUserMatch($assassin, $match) {
+function sendUserMatch($assassin, $match, $skipCall = false) {
 	$randomUser = getUnavailableAssassin($match);
 	$callLink = getPrankCallForUser($randomUser);
 
 	log_text('SEND --> '.$assassin['name'].': You have been assigned: '.$match['name']);
 	if (SYSTEM_STARTED) {
 		singleSMS($assassin['phone'], 'You have been assigned: '.$match['name']);
-		if ($callLink && $randomUser) {
+		if (!$skipCall && $callLink && $randomUser) {
 			singleCall($randomUser['phone'], $callLink);
 		}
 	}
 
-	if ($callLink && $randomUser) {
+	if (!$skipCall && $callLink && $randomUser) {
 		log_text('CALL --> '.$randomUser['phone'].':'.$callLink);
 	}
 }
