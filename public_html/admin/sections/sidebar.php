@@ -41,6 +41,12 @@ function activeFor($id) {
           <i class="fa fa-user"></i> <span>All Players</span>
         </a>
       </li>
+
+      <li<?=activeFor(4)?>>
+        <a href="/admin/alivePlayers">
+          <i class="fa fa-user"></i> <span>Alive Players</span>
+        </a>
+      </li>
     </ul>
   </section>
   <!-- /.sidebar -->
