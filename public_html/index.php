@@ -316,8 +316,8 @@ require_once(substr(getcwd(), 0, strpos(getcwd(), 'public_html')).'includes/incl
   <footer id="footer">
     <div class="footer-top wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
       <div class="container text-center">
-        <div class="footer-logo ">
-          <center><a href="index.html" class = "white"><img class="img-responsive" src="images/logo.png" alt=""><?php echo SYSTEM_SITE_NAME; ?> 2016</a></center>
+        <div class="footer-logo">
+          <center><a href="#" class="white"><img class="img-responsive" src="images/logo.png" alt=""><?php echo SYSTEM_SITE_NAME; ?> 2016</a></center>
         </div>
         <div class="social-icons">
           <ul>
