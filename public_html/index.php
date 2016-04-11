@@ -50,7 +50,7 @@ require_once(substr(getcwd(), 0, strpos(getcwd(), 'public_html')).'includes/incl
             <? } else { ?>
                 <div class="animated fadeInLeftBig" id="countdown"></div>
             <? } ?>
-            <p class="animated fadeInRightBig">Total Players: <?=getTotalNumberOfPlayers()?> | Alive: <?=getNumberOfPlayersAlive()?> | Dead: <?=getNumberOfKills()?> | Suicide: <?=getNumberOfPlayersSuicide()?></p>
+            <p class="animated fadeInRightBig">Total Players: <?=getTotalNumberOfPlayers()?> | Alive: <?=getNumberOfPlayersAlive()?> | Killed: <?=getNumberOfKills()?> | Suicide: <?=getNumberOfPlayersSuicide()?></p>
             <a data-scroll class="btn btn-start animated fadeInUpBig" href="#statistics-top">View Stats</a>
           </div>
         </div>
