@@ -327,3 +327,25 @@ else {
                  GetSystemMetrics(SM_CYHSCROLL) - 1,
                  TRUE);
 }
+
+switch (xml)
+{
+    case 0:
+        TextToSpeech("No information on 0 button");
+        break;
+    case 1:
+        foreach(DataRow row in dt.Rows)
+        {
+            SqlCommand cmd = new SqlCommand("Select mainMenuData from [menudatas] WHERE [mainMenuNum] = '" + xml + "' && [ivrNumber]=10000 ", objConnection);
+
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dataReader.Read())
+            {
+                data = dataReader.GetString(0);
+            }
+
+       } 
+       dataReader.Close();
+       Console.WriteLine(data);
+       break;    
+}
