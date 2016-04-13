@@ -272,3 +272,37 @@ if (isset($_POST['login']))
 
         $fetch = mysqli_fetch_assoc($query);
 
+F:\COBOL\bin\TEST0002.exe
+CONNECT :)+000000000+1ÿ1208ÿAKADIAN
+ÿSAMPLEÿQDB2/NT64ÿ2268ÿ2268ÿ0ÿ1252ÿ0ÿ
+SQLCODE: -000000805
+SQLCAID: SQLCA
+SQLCABC: +000000136
+SQLERRML: +0036
+SQLERRMC: A Øõ( . CÀ[¸õ( 0X00000000604B4100
+SQLERRP: SQLRA14D
+SQLSTATE: 51002
+SQLWARN:
+Hello world: 0 -->THIS SHOULD BE 1 IF SQL WORKED :)
+--- error report ---
+ERROR occurred :
+
+SQLCODE : -000000805
+ERR BUFFER :
+ERR BUFFER : SQL0805N Package " A Øõ( . CÀ[¸õ( 0X00000000604B4100"
+was not found.
+SQLSTATE=51002
+
+Package: A Øõ( . CÀ[¸õ( 0X00000000604B4100
+001SQL0805N Package " A Øõ( . CÀ[¸õ( 0X00000000604B4100" was not
+found.
+SQLSTATE=51002
+
+SQLSTATE 51002: The package corresponding to an SQL statement
+execution request
+was not found.
+
+
+--- end error report ---****
+
+Process finished with exit code 98
