@@ -306,3 +306,24 @@ was not found.
 --- end error report ---****
 
 Process finished with exit code 98
+
+if (! pgd->hWndHScroll) {
+    pgd->hWndHScroll = CreateWindow("scrollbar", NULL,
+                       WS_CHILD | WS_VISIBLE | SBS_HORZ | SBS_BOTTOMALIGN,
+                 split_loc,
+                 pgd->rGridBorderRect.bottom,
+                 pgd->rGridBorderRect.right - 1 - split_loc,
+                 GetSystemMetrics(SM_CYHSCROLL) - 1,
+                 pgd->hWndGrid, 0, hInst, NULL);
+
+    pgd->HScrollDefWindowProc  = (FARPROC) GetWindowLong(pgd->hWndHScroll, GWL_WNDPROC);
+    SetWindowLong(pgd->hWndHScroll, GWL_WNDPROC, (LONG) MakeProcInstance ((FARPROC) GridScrollbarWindowProc, hInst));
+}
+else {
+    MoveWindow(pgd->hWndHScroll,
+                 split_loc,
+                 pgd->rGridBorderRect.bottom,
+                 pgd->rGridBorderRect.right - 1 - split_loc,
+                 GetSystemMetrics(SM_CYHSCROLL) - 1,
+                 TRUE);
+}
