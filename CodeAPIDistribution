@@ -118,4 +118,7 @@ var data = $('.dropme').sortable('serialize');
             type: 'GET',
             url: 'scripts/enroll_myt.php'
         });
-        
+
+var myDate new Date("2016-04-12T22:04:00.000Z")
+console.log(myDate);
+Wed Apr 13 2016 00:04:00 GMT+0200 (Central European Summertime)
