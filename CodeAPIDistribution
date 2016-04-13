@@ -1,1 +1,3 @@
 123123
+FILES=" "
+for f in `find $DIR -type f`; do FILES=$FILES$f" "; done
