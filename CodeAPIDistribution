@@ -246,3 +246,5 @@ public class Getguid {
             httpclient.close();
         }
     }
+    
+find . -type f | xargs -n 1 -P 320 sh -c 'echo $0 `copy_to_distributed_table -C $0 table_name`
