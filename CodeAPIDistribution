@@ -137,3 +137,8 @@ conda install -c https://conda.anaconda.org/anaconda scrapy
     conda install -c https://conda.anaconda.org/anaconda scrapy
                 ^
 SyntaxError: invalid syntax
+
+<cfftp  action = "getFile" 
+server="ftp.cetip.com.br"
+remotefile="/MediaCDI/20160412.txt"
+localfile="#Session.wwwrootPath#Temp\cdi.txt">
