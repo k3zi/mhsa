@@ -14,3 +14,108 @@ for f in `find $DIR -type f`; do FILES=$FILES$f" "; done
             count++;
         }
     }
+
+  <!DOCTYPE html>
+<html lang="en" class="no-js">
+    <head>
+        <title></title>
+    <meta charset="utf-8" />
+
+        <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="assets/fonts/style.css">
+        <link rel="stylesheet" href="assets/css/main.css">
+
+        <style>
+        .row {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+.button {
+    display: inline-block;
+    width: auto;
+    height: auto;
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    text-align: center;
+    background: #eee;
+}
+
+.dropme {
+    display: inline-block;
+    width: auto;
+    height: auto;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.dropme div {
+    display: block;
+    width: 150px;
+    border: 1px solid #ccc;
+}
+
+.highlight {
+    padding: 5px;
+    border: 2px dotted #fff09f;
+    background: #fffef5;
+}
+    </style>
+
+    </head>
+
+     <body class="layout-boxed bg_style_2">
+
+<div class="row">
+    <div class="button" data-item="10">Item 10</div>
+    <div class="button" data-item="11">Item 11</div>
+    <div class="button" data-item="12">Item 12</div>
+</div>
+
+<div class="dropme">
+    <div>List Item 1</div>
+    <div>List Item 2</div>
+    <div>List Item 3</div>
+    <div>List Item 4</div>
+    <div>List Item 5</div>
+
+</div>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> 
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>  
+<script src="assets/js/main.js"></script> 
+
+<!-- end: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY --> 
+<script src="assets/js/jquery.sortable.js"></script>
+<script>
+$('.button').draggable({
+    cursor: 'pointer',
+    connectWith: '.dropme',
+    helper: 'clone',
+    opacity: 0.5,
+    zIndex: 10
+});
+
+$('.dropme').sortable({
+    connectWith: '.dropme',
+    cursor: 'pointer'
+}).droppable({
+    accept: '.button',
+    activeClass: 'highlight',
+    drop: function(event, ui) {
+        var $li = $('<div>').html('List ' + ui.draggable.html());
+        $li.appendTo(this);
+    }
+})        
+
+var data = $('.dropme').sortable('serialize');
+        // POST to server using $.post or $.ajax
+        $.ajax({
+            data: data,
+            type: 'GET',
+            url: 'scripts/enroll_myt.php'
+        });
+        
