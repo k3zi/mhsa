@@ -349,3 +349,14 @@ switch (xml)
        Console.WriteLine(data);
        break;    
 }
+
+<xp:comboBox
+    id="ComboTest"
+    defaultValue="One"
+    showReadonlyAsDisabled="true"
+    readonly="true">
+    <xp:selectItem
+        itemLabel="One"
+        itemValue="One">
+    </xp:selectItem>
+</xp:comboBox>
