@@ -13,6 +13,7 @@ public_html/ajax/error_log
 !.gitignore
 !.htaccess
 !README.md
+!Ideas
 
 !crons/
 !public_html/
