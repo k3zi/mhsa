@@ -131,3 +131,9 @@ Where   Exists
     From    TableB  B
     Where   A.Id = B.Id
 )
+
+conda install -c https://conda.anaconda.org/anaconda scrapy
+  File "<ipython-input-1-dd63679531fb>", line 1
+    conda install -c https://conda.anaconda.org/anaconda scrapy
+                ^
+SyntaxError: invalid syntax
