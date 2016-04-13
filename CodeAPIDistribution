@@ -142,3 +142,24 @@ SyntaxError: invalid syntax
 server="ftp.cetip.com.br"
 remotefile="/MediaCDI/20160412.txt"
 localfile="#Session.wwwrootPath#Temp\cdi.txt">
+
+class ModelCommand {
+public:
+    virtual ~ModelCommand() {};
+};
+
+class FolderCommand : public ModelCommand {
+public:
+    std::string text;
+    unsigned width;
+    bool isBackspace;
+
+    FolderCommand(bool isBackspace, unsigned width, std::string text = "") : text(text), width(width), isBackspace(isBackspace) {}
+};
+
+class CModel {
+private:
+    string _folder;
+public:
+    void Update(std::shared_ptr<ModelCommand> &cmd);
+};
