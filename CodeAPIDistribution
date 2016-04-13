@@ -163,3 +163,14 @@ private:
 public:
     void Update(std::shared_ptr<ModelCommand> &cmd);
 };
+
+function deleteAllReports() {
+  var logger = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Unsampled Report Logs');
+  var lastRow = logger.getLastRow();
+  var unsampledReportsArray = logger.getRange(2, lastRow+1, 1, 1).getValues();
+   var request = Analytics.Management.UnsampledReports.Delete({
+      'accountId': '123456',
+      'webPropertyId': 'UA-123456-1',
+      'profileId': '7654321',
+      'unsampledReportId': '1112223334111222333411'
+    });
