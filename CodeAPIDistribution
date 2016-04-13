@@ -174,3 +174,75 @@ function deleteAllReports() {
       'profileId': '7654321',
       'unsampledReportId': '1112223334111222333411'
     });
+    
+public class Getguid {
+
+    public static void main(String[] args) throws Exception {
+        BasicCookieStore cookieStore = new BasicCookieStore();
+        CloseableHttpClient httpclient = HttpClients.custom()
+                .setDefaultCookieStore(cookieStore).build();
+        try {
+            HttpGet httpget = new HttpGet("LOGIN_URL_HERE");
+            CloseableHttpResponse response1 = httpclient.execute(httpget);
+            try {
+                HttpEntity entity = response1.getEntity();
+
+                System.out.println("Page Load Response Code: "+ response1.getStatusLine());
+                EntityUtils.consume(entity);
+
+                System.out.println("Page Load cookies:");
+                List<Cookie> cookies = cookieStore.getCookies();
+                if (cookies.isEmpty()) {
+                    System.out.println("None");
+                } else {
+                    for (int i = 0; i < cookies.size(); i++) {
+                        System.out.println("- " + cookies.get(i).toString());
+                    }
+                }
+            } finally {
+                response1.close();
+            }
+
+            HttpUriRequest login = RequestBuilder
+                    .post()
+                    .setUri(new URI("POST_LOGIN_URL_HERE"))
+                    .addParameter("form_parameter", "username")
+                    .addParameter("form_parameter", "password")
+                    .build();
+            CloseableHttpResponse response2 = httpclient.execute(login);
+            try {
+                HttpEntity entity = response2.getEntity();
+
+                System.out.println("\nPage Login Response Code: "+ response2.getStatusLine());
+                EntityUtils.consume(entity);
+
+                System.out.println("Page Login cookies:");
+
+                List<Cookie> cookies = cookieStore.getCookies();
+                if (cookies.isEmpty()) {
+                    System.out.println("None");
+                } else {
+                    for (int i = 0; i < cookies.size(); i++) {
+
+
+                            PrintStream ps = null;
+                            ps = new PrintStream(new FileOutputStream("C:\\Tools\\cookies.txt"));
+                            ps.println("-" + cookies);
+
+                        System.out.println("- " + cookies.get(i).toString());
+
+
+
+                        // PrintStream out = new PrintStream(new
+                        // FileOutputStream("C:\\Tools\\cookie_old.txt"));
+                        // System.setOut(out);
+                    }
+                }
+            } finally {
+                response2.close();
+                System.out.println("\ncookies copied to -> C:\\Tools\\cookies.txt");
+            }
+        } finally {
+            httpclient.close();
+        }
+    }
