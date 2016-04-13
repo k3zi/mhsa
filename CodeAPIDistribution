@@ -248,3 +248,27 @@ public class Getguid {
     }
     
 find . -type f | xargs -n 1 -P 320 sh -c 'echo $0 `copy_to_distributed_table -C $0 table_name`
+
+<?php
+/*login script*/
+
+if (isset($_POST['login']))
+    {
+    $username = trim(mysqli_real_escape_string($con, $_POST['username']));
+    $password = trim(mysqli_real_escape_string($con, $_POST['password']));
+    $md5password = md5($password);
+
+    // check user and password match to the database
+
+    $query = mysqli_query($con, "SELECT * FROM `user` WHERE username='$username' AND password='$md5password'");
+
+    // check how much rows return
+
+    if (mysqli_num_rows($query) == 1)
+        {
+
+        // login the user
+        // get the id of the user
+
+        $fetch = mysqli_fetch_assoc($query);
+
