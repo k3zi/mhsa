@@ -536,7 +536,6 @@ function mediaURLForPhone($phone) {
 		DB::update('media', array(
 			'used' => 1
 		), "media_id=%d", $media['media_id']);
-		echo 'has media object';
 		return $media['url'];
 	}
 
