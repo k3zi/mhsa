@@ -141,7 +141,7 @@ if ($user = getUserByPhone($phone)) {
       break;
     }
 } else {
-    checkAndStoreMedia($phone, $sms);
+    $didStoreMedia = checkAndStoreMedia($phone, $sms);
 
     if (startsWith(strtoupper($message), 'ALL:')) {
         if (in_array($phone, $SYSTEM_ADMIN_PHONES)) {
@@ -174,7 +174,9 @@ if ($user = getUserByPhone($phone)) {
           break;
 
           default:
+          if (!$didStoreMedia) {
             $response = SYSTEM_RESPONSE_NO_ACCOUNT;
+          }
           break;
         }
     }
