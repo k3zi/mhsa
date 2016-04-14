@@ -8,12 +8,14 @@ foreach ($SYSTEM_COMMANDS as $command => $info) {
 }
 $commandsResponse = implode("\n\n", $commandsResponse);
 
+print_r($_SESSION);
+
 function proccessAdminMessage($phone, $message, $name = "Not Registered", $media = null) {
     global $SYSTEM_ADMIN_PHONES;
 
     $message = trim(substr($message, strpos($message, ':') + 1));
     $media = mediaURLForPhone($phone);
-    
+
     foreach ($SYSTEM_ADMIN_PHONES as $adminPhone) {
         singleSMS($adminPhone, $phone.' ('.$name.')'.":\n\n".$message, $media);
     }
