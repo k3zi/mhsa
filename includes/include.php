@@ -382,21 +382,6 @@ function createAllMatches() {
 	return $results;
 }
 
-function createNeededMatches() {
-	$assassins = getAvailableAssassins();
-	$results = array();
-
-	for($i = 0; $i < count($assassins); $i++) {
-		$assassin = $assassins[$i];
-
-		if($match = performMatch($assassin)) {
-			$resuls[] = $match;
-		}
-	}
-
-	return $resuls;
-}
-
 function setUserDarget($user, $match, $debug = false) {
 	  DB::update('users', array(
 		'target_id' => $match['user_id']
@@ -413,21 +398,6 @@ function performMatch($user, $debug = false) {
 	}
 
 	return false;
-}
-
-function performSwitchMatch($user) {
-	$otherUser = getUnavailableAssassin($user['user_id']);
-	$otherPersonsAssassins = getAssassinForUserID($otherUser['user_id']);
-
-	DB::update('users', array(
-	  'target_id' => $user['user_id']
-	), "user_id=%d", $otherPersonsAssassins['user_id']);
-
-	DB::update('users', array(
-	  'target_id' => $otherUser['user_id']
-	), "user_id=%d", $user['user_id']);
-
-	return array('SWITCH: '.$otherPersonsAssassins['name'].' ----> '.$user['name'], 'SWITCH: '.$user['name'].' ----> ('.$otherUser['name'].')');
 }
 
 //Plivo Functions
