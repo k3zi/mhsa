@@ -282,6 +282,13 @@ function checkUserDeathTexts($isAssassin, $userID) {
 				'value' => SYSTEM_XP_CONFIRMEDKILL,
 				'date' => time()
 			));
+
+			$personalMessage = 'You earned '.SYSTEM_XP_CONFIRMEDKILL.' XP for adding a photo!';
+			log_text('SEND --> '.$assassin['name'].': '.$personalMessage);
+
+			if (SYSTEM_STARTED) {
+				singleSMS($assassin['phone'], $personalMessage);
+			}
 		}
 
 		$message = formatUsername($assassin).' has assassinated '.formatUsername($target).($mediaURL ? '#ConfirmedKill' : '');
@@ -393,8 +400,14 @@ function checkForAchievment($user) {
 
 	if ($killsToday > 1) {
 		$xpEarned = xpForMultiKills($killsToday);
-		$message = $user['name'].' earned '.$xpEarned.' XP for a #'.multiplierForNumber().'Kill in one day!';
-		$personalMessage = 'You earned '.$xpEarned.' XP for a '.multiplierForNumber().' Kill in one day!';
+		$message = $user['name'].' earned '.$xpEarned.' XP for a #'.multiplierForNumber().'Kill in the same day!';
+		$personalMessage = 'You earned '.$xpEarned.' XP for a '.multiplierForNumber().' Kill in the same day!';
+
+		DB::insert('xp', array(
+			'user_id' => $user['user_id'],
+			'value' => $xpEarned,
+			'date' => time()
+		));
 
 		log_text('SEND --> '.$user['name'].': '.$personalMessage);
 		log_text('TWEET --> '.$message);
