@@ -264,18 +264,18 @@ function checkUserDeathTexts($isAssassin, $userID) {
 			'date' => time()
 		));
 
-		$message = formatUsername($assassin).' has assassinated '.formatUsername($target);
+		$mediaURL = mediaURLForPhone($assassin['phone']);
+		if ($mediaURL) {
+			DB::insert('xp', array(
+				'user_id' => $assassin['user_id'],
+				'value' => SYSTEM_XP_CONFIRMEDKILL,
+				'date' => time()
+			));
+		}
+
+		$message = formatUsername($assassin).' has assassinated '.formatUsername($target).($mediaURL ? '#ConfirmedKill' : '');
 		log_text('TWEET --> '.$message);
 		if (SYSTEM_STARTED) {
-			$mediaURL = mediaURLForPhone($assassin['phone']);
-			if ($mediaURL) {
-				DB::insert('xp', array(
-					'user_id' => $assassin['user_id'],
-					'value' => SYSTEM_XP_CONFIRMEDKILL,
-					'date' => time()
-				));
-			}
-			
 			postToTwitter($message, $mediaURL);
 		}
 
