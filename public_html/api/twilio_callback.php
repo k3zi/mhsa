@@ -9,6 +9,7 @@ foreach ($SYSTEM_COMMANDS as $command => $info) {
 $commandsResponse = implode("\n\n", $commandsResponse);
 
 print_r($_SESSION);
+$_SESSION['test'] = 'jihihi';
 
 function proccessAdminMessage($phone, $message, $name = "Not Registered", $media = null) {
     global $SYSTEM_ADMIN_PHONES;
