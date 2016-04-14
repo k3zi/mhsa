@@ -50,7 +50,7 @@ define('SYSTEM_SQL_VALID_USER', 'users.is_blocked = 0 AND users.is_waiting = 0')
 define('SYSTEM_SQL_IS_ALIVE', 'LEFT JOIN kills ON users.user_id = kills.eliminated WHERE kills.kill_id IS NULL');
 define('SYSTEM_SQL_IS_NOT_ALIVE', 'LEFT JOIN kills ON users.user_id = kills.eliminated WHERE kills.kill_id IS NOT NULL');
 define('SYSTEM_SQL_IS_SUICIDE', 'LEFT JOIN kills ON users.user_id = kills.eliminated WHERE kills.killer = kills.eliminated AND kills.kill_id IS NOT NULL');
-define('SYSTEM_SQL_STATS_JOIN', 'LEFT JOIN xp ON (users.user_id = xp.user_id) LEFT JOIN kills k ON (users.user_id = k.killer AND k.eliminated != k.killer) LEFT JOIN kills d ON (users.user_id = d.eliminated AND d.eliminated != d.killer) LEFT JOIN kills s ON (users.user_id = s.eliminated AND s.eliminated = s.killer)');
+define('SYSTEM_SQL_STATS_JOIN', 'LEFT JOIN kills k ON (users.user_id = k.killer AND k.eliminated != k.killer) LEFT JOIN kills d ON (users.user_id = d.eliminated AND d.eliminated != d.killer) LEFT JOIN kills s ON (users.user_id = s.eliminated AND s.eliminated = s.killer)');
 
 $SYSTEM_NUM_PLAYERS_ALIVE = getNumberOfPlayersAlive();
 
@@ -92,7 +92,7 @@ function getAssassinForUserID($user_id) {
 }
 
 function getUserByPhone($phone) {
-	return DB::queryFirstRow('SELECT users.*, COUNT(k.kill_id) AS num_kills, (d.kill_id IS NOT NULL) AS dead, (s.kill_id IS NOT NULL) AS suicide, SUM(xp.value) AS points FROM users '.SYSTEM_SQL_STATS_JOIN.' WHERE users.phone = %s GROUP BY users.phone', $phone);
+	return DB::queryFirstRow('SELECT users.*, COUNT(k.kill_id) AS num_kills, (d.kill_id IS NOT NULL) AS dead, (s.kill_id IS NOT NULL) AS suicide FROM users '.SYSTEM_SQL_STATS_JOIN.' WHERE users.phone = %s GROUP BY users.phone', $phone);
 }
 
 function getUser($user_id) {
@@ -123,7 +123,7 @@ function getTotalNumberOfPlayers() {
 
 function getTop10Players($limit = 10) {
 	$limit = $limit > 0 ? ' LIMIT '.$limit : '';
-	return DB::query('SELECT users.name, users.twitter_name, COUNT(k.kill_id) AS num_kills, (d.kill_id IS NOT NULL) AS dead, (s.kill_id IS NOT NULL) AS suicide, SUM(xp.value) AS points FROM users '.SYSTEM_SQL_STATS_JOIN.' WHERE '.SYSTEM_SQL_VALID_USER.' GROUP BY users.phone ORDER BY dead ASC, suicide ASC, num_kills DESC'.$limit);
+	return DB::query('SELECT users.name, users.twitter_name, COUNT(k.kill_id) AS num_kills, (d.kill_id IS NOT NULL) AS dead, (s.kill_id IS NOT NULL) AS suicide FROM users '.SYSTEM_SQL_STATS_JOIN.' WHERE '.SYSTEM_SQL_VALID_USER.' GROUP BY users.phone ORDER BY dead ASC, suicide ASC, num_kills DESC'.$limit);
 }
 
 function getTextCommands() {
