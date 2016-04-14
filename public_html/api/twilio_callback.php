@@ -13,7 +13,7 @@ function proccessAdminMessage($phone, $message, $name = "Not Registered", $media
 
     $message = trim(substr($message, strpos($message, ':') + 1));
     $media = mediaURLForPhone($phone);
-    postToTwitter('Testing Image Upload', $media);
+    
     foreach ($SYSTEM_ADMIN_PHONES as $adminPhone) {
         singleSMS($adminPhone, $phone.' ('.$name.')'.":\n\n".$message, $media);
     }
