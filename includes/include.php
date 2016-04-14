@@ -91,7 +91,7 @@ function getAssassinForUserID($user_id) {
 }
 
 function getUserByPhone($phone) {
-	return DB::queryFirstRow('SELECT users.*, COUNT(k.kill_id) AS num_kills, (d.kill_id IS NOT NULL) AS dead, (s.kill_id IS NOT NULL) AS suicide FROM users '.SYSTEM_SQL_STATS_JOIN.' WHERE users.phone = %s GROUP BY users.phone', $phone);
+	return DB::queryFirstRow('SELECT users.*, COUNT(k.kill_id) AS num_kills, (d.kill_id IS NOT NULL) AS dead, (s.kill_id IS NOT NULL) AS suicide, COUNT(xp.value) AS points FROM users '.SYSTEM_SQL_STATS_JOIN.' WHERE users.phone = %s GROUP BY users.phone', $phone);
 }
 
 function getUser($user_id) {
