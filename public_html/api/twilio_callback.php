@@ -26,7 +26,7 @@ if (!$sms || $sms->from == $sms->to) {
     die();
 }
 
-$phone = substr(trim($message->from), -10);
+$phone = substr(trim($sms->from), -10);
 $message = trim($sms->body);
 
 if ($user = getUserByPhone($phone)) {
