@@ -497,7 +497,7 @@ function checkAndStoreMedia($phone, $message, $user = null) {
 }
 
 function mediaURLForPhone($phone) {
-	if ($media = DB::queryFirstRow("SELECT * FROM media WHERE phone = %s AND used = 0", $phone)) {
+	if ($media = DB::queryFirstRow("SELECT * FROM media WHERE phone = %s AND used = 0 ORDER BY media_id DESC", $phone)) {
 		DB::update('media', array(
 			'used' => 1
 		), "media_id=%d", $media['media_id']);
