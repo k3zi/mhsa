@@ -479,16 +479,22 @@ function postToTwitter($message, $mediaURL = null) {
 
 function checkAndStoreMedia($phone, $message, $user = null) {
 	if ($message->num_media > 0) {
-		$media = array_pop($message->media);
-		$url = twilioURLForMedia($media);
-		log_text('MEDIA: '.($user ? $user['name'] : $phone).' --> '.$url);
+		foreach ($message->media as $media) {
+			$media = array_pop($message->media);
+			$url = twilioURLForMedia($media);
+			log_text('MEDIA: '.($user ? $user['name'] : $phone).' --> '.$url);
 
-		DB::insert('media', array(
-			'phone' => $phone,
-			'url' => $url,
-			'date' => time()
-		));
+			DB::insert('media', array(
+				'phone' => $phone,
+				'url' => $url,
+				'date' => time()
+			));
+
+			return true;
+		}
 	}
+
+	return false;
 }
 
 function mediaURLForPhone($phone) {

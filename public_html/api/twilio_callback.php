@@ -10,7 +10,7 @@ $commandsResponse = implode("\n\n", $commandsResponse);
 
 function proccessAdminMessage($phone, $message, $name = "Not Registered", $media = null) {
     global $SYSTEM_ADMIN_PHONES;
-    
+
     $message = trim(substr($message, strpos($message, ':') + 1));
     $media = mediaURLForPhone($phone);
 
@@ -32,7 +32,7 @@ $phone = substr(trim($sms->from), -10);
 $message = trim($sms->body);
 
 if ($user = getUserByPhone($phone)) {
-    checkAndStoreMedia($phone, $sms, $user);
+    $didStoreMedia = checkAndStoreMedia($phone, $sms, $user);
 
     if (startsWith(strtoupper($message), 'MSG:')) {
         proccessAdminMessage($phone, $message, $user['name']);
@@ -139,7 +139,9 @@ if ($user = getUserByPhone($phone)) {
       break;
 
       default:
+      if (!$didStoreMedia) {
         $response = SYSTEM_RESPONSE_INVALID_COMMAND;
+      }
       break;
     }
 } else {
