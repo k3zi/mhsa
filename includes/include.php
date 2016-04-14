@@ -488,8 +488,8 @@ function checkAndStoreMedia($phone, $message, $user = null) {
 
 function mediaURLForPhone($phone) {
 	if ($media = $_SESSION['twilio_media'][$phone]) {
-		unset($_SESSION['twilio_media'][$phone]);
-
+		//unset($_SESSION['twilio_media'][$phone]);
+		echo 'has media object';
 		if ($media = unserialize($media)) {
 			return twilioURLForMedia($media);
 		}
