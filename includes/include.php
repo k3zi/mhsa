@@ -22,6 +22,7 @@ define('SYSTEM_START_DATE_STRING', 'April 4th, 2016 7:00 AM');
 define('SYSTEM_STARTED', true);
 
 define('SYSTEM_XP_CONFIRMEDKILL', 5);
+define('SYSTEM_XP_MULTIKILL', 5);
 
 //Setup Things
 
@@ -279,6 +280,8 @@ function checkUserDeathTexts($isAssassin, $userID) {
 			postToTwitter($message, $mediaURL);
 		}
 
+		checkForAchievment($assassin);
+
 		if ($waitlist = getWaitlistUser()) {
 			DB::update('users', array(
 			  'target_id' => $waitlist['user_id']
@@ -364,11 +367,32 @@ function handleVictory($user) {
 	$message = 'Congratulations on winning '.SYSTEM_SITE_NAME.' '.SYSTEM_YEAR.'!';
 	$twitterMessage = 'Congratulations '.formatUsername($user).' on winning '.SYSTEM_SITE_NAME.' '.SYSTEM_YEAR.'!';
 
-	log_text('SEND --> '.$user['name'].': '.$twitterMessage);
+	log_text('SEND --> '.$user['name'].': '.$message);
 	log_text('TWEET --> '.$twitterMessage);
 	if (SYSTEM_STARTED) {
 		singleSMS($user['phone'], $message);
 		postToTwitter($twitterMessage);
+	}
+}
+
+function checkForAchievment($user) {
+	//Only called on a kill
+	$beginOfDay = strtotime("today");
+	$endOfDay = strtotime("tomorrow") - 1;
+	$killsToday = DB::queryFirstField("SELECT COUNT(kill_id) FROM kills WHERE killer = %d AND eliminated != -1 AND date <= %d AND date > %d", $user['user_id'], $endOfDay, $beginOfDay);
+
+	if ($killsToday > 1) {
+		$xpEarned = xpForMultiKills($killsToday);
+		$message = $user['name'].' earned '.$xpEarned.' XP for a #'.multiplierForNumber().'Kill in one day!';
+		$personalMessage = 'You earned '.$xpEarned.' XP for a '.multiplierForNumber().' Kill in one day!';
+
+		log_text('SEND --> '.$user['name'].': '.$personalMessage);
+		log_text('TWEET --> '.$message);
+
+		if (SYSTEM_STARTED) {
+			singleSMS($user['phone'], $personalMessage);
+			postToTwitter($message);
+		}
 	}
 }
 
@@ -564,6 +588,27 @@ function formatUsernameHTML($user) {
 	}
 
 	return $name;
+}
+
+function multiplierForNumber($num) {
+	switch ($num) {
+		case 1:
+			return 'Single';
+		case 2:
+			return 'Double';
+		case 3:
+			return 'Triple';
+		case 4:
+			return 'Quadruple';
+
+		default:
+			return 'Multi';
+	}
+}
+
+function xpForMultiKills($num) {
+	$num = $num - 1;
+	return $num*SYSTEM_XP_MULTIKILL;
 }
 
 function log_text($text) {
