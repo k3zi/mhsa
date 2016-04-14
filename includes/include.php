@@ -125,6 +125,16 @@ function getTop10Players($limit = 10) {
 	return DB::query('SELECT users.name, users.twitter_name, COUNT(k.kill_id) AS num_kills, (d.kill_id IS NOT NULL) AS dead, (s.kill_id IS NOT NULL) AS suicide, COUNT(xp.value) AS points FROM users '.SYSTEM_SQL_STATS_JOIN.' WHERE '.SYSTEM_SQL_VALID_USER.' GROUP BY users.phone ORDER BY dead ASC, suicide ASC, num_kills DESC'.$limit);
 }
 
+function getTextCommands() {
+	global $SYSTEM_COMMANDS;
+
+	$commandsResponse = array();
+	foreach ($SYSTEM_COMMANDS as $command => $info) {
+	    $commandsResponse[] = $command." - ".$info;
+	}
+	return implode("\n\n", $commandsResponse);
+}
+
 //Handle Text Response
 
 function userTextDidSuicide($user) {
