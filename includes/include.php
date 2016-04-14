@@ -479,20 +479,25 @@ function postToTwitter($message, $mediaURL = null) {
 
 function checkAndStoreMedia($phone, $message, $user = null) {
 	if ($message->num_media > 0) {
-		foreach ($message->media as $media) {
-			$_SESSION['twilio_media'][$phone] = serialize($media);
-			log_text('MEDIA: '.($user ? $user['name'] : $phone).' --> '.twilioURLForMedia($media));
-	    }
+		$media = array_pop($message->media);
+		$url = twilioURLForMedia($media);
+		log_text('MEDIA: '.($user ? $user['name'] : $phone).' --> '.$url);
+
+		DB::insert('media', array(
+			'phone' => $phone,
+			'url' => $url,
+			'date' => time()
+		));
 	}
 }
 
 function mediaURLForPhone($phone) {
-	if ($media = $_SESSION['twilio_media'][$phone]) {
-		//unset($_SESSION['twilio_media'][$phone]);
+	if ($media = DB::queryFirstRow("SELECT * FROM media WHERE phone = %s AND used = 0", $phone)) {
+		DB::update('media', array(
+			'used' => 1
+		), "media_id=%d", $media['media_id']);
 		echo 'has media object';
-		if ($media = unserialize($media)) {
-			return twilioURLForMedia($media);
-		}
+		return $media['url'];
 	}
 
 	return false;
