@@ -265,6 +265,7 @@ require_once(substr(getcwd(), 0, strpos(getcwd(), 'public_html')).'includes/incl
                 <th>Pos.</th>
                 <th>Name</th>
                 <th>Kills</th>
+                <th>XP</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -278,6 +279,7 @@ require_once(substr(getcwd(), 0, strpos(getcwd(), 'public_html')).'includes/incl
                 <td><?=$i?></td>
                 <td><?=formatUsernameHTML($user)?></td>
                 <td><?=$user['num_kills']?></td>
+                <td>0</td>
                 <td><?=formatUserStatus($user)?></td>
               </tr>
             <? } ?>
