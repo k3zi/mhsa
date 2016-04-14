@@ -12,8 +12,9 @@ function proccessAdminMessage($phone, $message, $name = "Not Registered", $media
     global $SYSTEM_ADMIN_PHONES;
 
     $message = trim(substr($message, strpos($message, ':') + 1));
+    $media = mediaURLForPhone($phone);
     foreach ($SYSTEM_ADMIN_PHONES as $adminPhone) {
-        singleSMS($adminPhone, $phone.' ('.$name.')'.":\n\n".$message, mediaURLForPhone($phone));
+        singleSMS($adminPhone, $phone.' ('.$name.')'.":\n\n".$message, $media);
     }
 }
 

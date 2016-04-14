@@ -479,18 +479,19 @@ function postToTwitter($message, $mediaURL = null) {
 function checkAndStoreMedia($phone, $message, $user = null) {
 	if ($message->num_media > 0) {
 		foreach ($message->media as $media) {
-			$_SESSION['twilio_media'][$phone] = twilioURLForMedia($media);
+			$_SESSION['twilio_media'][$phone] = serialize($media);
 			log_text('MEDIA: '.($user ? $user['name'] : $phone).' --> '.twilioURLForMedia($media));
 	    }
 	}
-
-	return isset($_SESSION['twilio_media'][$phone]);
 }
 
 function mediaURLForPhone($phone) {
 	if ($media = $_SESSION['twilio_media'][$phone]) {
 		unset($_SESSION['twilio_media'][$phone]);
-		return $media;
+
+		if ($media = unserialize($media)) {
+			return twilioURLForMedia($media);
+		}
 	}
 
 	return false;
