@@ -301,7 +301,7 @@ function checkUserDeathTexts($isAssassin, $userID) {
 			}
 		}
 
-		$message = formatUsername($assassin).' has assassinated '.formatUsername($target).($mediaURL ? '#ConfirmedKill' : '');
+		$message = formatUsername($assassin).' has assassinated '.formatUsername($target).($mediaURL ? ' #ConfirmedKill' : '');
 		log_text('TWEET --> '.$message);
 		if (SYSTEM_STARTED) {
 			postToTwitter($message, $mediaURL);
