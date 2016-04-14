@@ -865,6 +865,7 @@ section {
   background-color: rgba(255, 255, 255, .5);
   border-color: rgba(255, 255, 255, .1);
   border-radius: 0;
+  border: solid 1px #eee;
   box-shadow: none;
 }
 
