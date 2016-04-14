@@ -265,7 +265,7 @@ function checkUserDeathTexts($isAssassin, $userID) {
 		$message = formatUsername($assassin).' has assassinated '.formatUsername($target);
 		log_text('TWEET --> '.$message);
 		if (SYSTEM_STARTED) {
-			postToTwitter($message);
+			postToTwitter($message, mediaURLForPhone($assassin['phone']));
 		}
 
 		if ($waitlist = getWaitlistUser()) {
@@ -432,11 +432,15 @@ function performSwitchMatch($user) {
 
 //Plivo Functions
 
-function singleSMS($to, $message) {
+function singleSMS($to, $message, $mediaURL = null) {
   global $twilio;
   if($to == TWILIO_PHONE_NUMBER || $to == substr(TWILIO_PHONE_NUMBER, 0, -10)) return;
 
-	return $twilio->account->messages->sendMessage(TWILIO_PHONE_NUMBER, $to, $message);
+  if ($mediaURL) {
+	  return $twilio->account->messages->sendMessage(TWILIO_PHONE_NUMBER, $to, $message, array($mediaURL));
+  }
+
+  return $twilio->account->messages->sendMessage(TWILIO_PHONE_NUMBER, $to, $message);
 }
 
 function massSMS($toArray, $message){
@@ -481,15 +485,47 @@ function autoFollow($oauth_token, $oauth_token_secret) {
 	return false;
 }
 
-function postToTwitter($message) {
+function postToTwitter($message, $mediaURL = null) {
 	$tag = str_replace(' ', '', SYSTEM_SITE_NAME.SYSTEM_YEAR);
 	$message = $message.' #'.$tag;
-	if(strlen($message) > 140) {
+	if (strlen($message) > 140) {
 		return false;
 	}
 
 	$connection = new TwitterOAuth(TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET);
-	return $connection->post("statuses/update", ['status' => $message]);
+	$params = ['status' => $message];
+
+	if ($mediaURL) {
+		$media = $connection->upload('media/upload', ['media' => $mediaURL]);
+
+		if ($media) {
+			$params['media_ids'] = $media->media_id_string;
+		}
+	}
+
+	return $connection->post("statuses/update", $params);
+}
+
+function checkAndStoreMedia($phone, $message, $user = null) {
+	foreach ($message->media as $media) {
+		$_SESSION['twilio_media'][$phone] = serialize($media);
+		log_text('MEDIA: '.($user ? $user['name'] : $phone).' --> '.twilioURLForMedia($media));
+    }
+}
+
+function mediaURLForPhone($phone) {
+	if ($media = $_SESSION['twilio_media'][$phone]) {
+		unset($_SESSION['twilio_media'][$phone]);
+		if ($media = unserialize($media)) {
+			return twilioURLForMedia($media);
+		}
+	}
+
+	return false;
+}
+
+function twilioURLForMedia($media) {
+	return 'https://api.twilio.com'.$media->uri;
 }
 
 //Helper Functions

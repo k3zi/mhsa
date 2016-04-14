@@ -8,7 +8,7 @@ foreach ($SYSTEM_COMMANDS as $command => $info) {
 }
 $commandsResponse = implode("\n\n", $commandsResponse);
 
-function proccessAdminMessage($phone, $message, $name = "Not Registered") {
+function proccessAdminMessage($phone, $message, $name = "Not Registered", $media) {
     global $SYSTEM_ADMIN_PHONES;
 
     $message = trim(substr($message, strpos($message, ':') + 1));
@@ -21,28 +21,30 @@ if (!isset($_REQUEST['MessageSid'])) {
     die();
 }
 
-$message = $twilio->account->messages->get($_REQUEST['MessageSid']);
-if (!$message || $message->from == $message->to) {
+$sms = $twilio->account->messages->get($_REQUEST['MessageSid']);
+if (!$sms || $sms->from == $sms->to) {
     die();
 }
 
 $phone = substr(trim($message->from), -10);
-$message = trim($message->body);
+$message = trim($sms->body);
 
 if ($user = getUserByPhone($phone)) {
+    checkAndStoreMedia($phone, $sms, $user);
+
     if (startsWith(strtoupper($message), 'MSG:')) {
         proccessAdminMessage($phone, $message, $user['name']);
-        return singleSMS($phone, SYSTEM_RESPONSE_ADMIN_SENT);
+        return singleSMS($phone, SYSTEM_RESPONSE_ADMIN_SENT, mediaURLForPhone($phone));
     }
 
-    if($user['waiting_name']) {
+    if ($user['waiting_name']) {
         if(strtoupper($message) == "WITHDRAW") {
             DB::delete('users', "user_id=%d", $user['user_id']);
             return singleSMS($phone, SYSTEM_RESPONSE_WITHDRAW);
         }
 
         $names = explode(" ", $message);
-        if(count($names) < 2) {
+        if (count($names) < 2) {
             return singleSMS($phone, "Please enter a valid name.");
         } else {
             DB::update('users', array(
@@ -139,6 +141,8 @@ if ($user = getUserByPhone($phone)) {
       break;
     }
 } else {
+    checkAndStoreMedia($phone, $sms);
+
     if (startsWith(strtoupper($message), 'ALL:')) {
         if (in_array($phone, $SYSTEM_ADMIN_PHONES)) {
             $message = trim(substr($message, strpos($message, ':') + 1));
