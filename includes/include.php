@@ -482,8 +482,6 @@ function checkAndStoreMedia($phone, $message, $user = null) {
 			$_SESSION['twilio_media'][$phone] = twilioURLForMedia($media);
 			log_text('MEDIA: '.($user ? $user['name'] : $phone).' --> '.twilioURLForMedia($media));
 	    }
-	} else {
-		unset($_SESSION['twilio_media'][$phone]);
 	}
 
 	return isset($_SESSION['twilio_media'][$phone]);
