@@ -101,7 +101,7 @@ if ($user = getUserByPhone($phone)) {
         if (SYSTEM_STARTED) {
             $response .= "\n".'Status: '.formatUserStatus($user);
             $response .= "\n"."Kills: ".$user['num_kills'];
-            $response .= "\n"."XP: ".$user['points'];
+            $response .= "\n"."XP: ".($user['points'] ? $user['points'] : 0);
         } else {
             $response .= "\n".'Status: Registered';
         }
