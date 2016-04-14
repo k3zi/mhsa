@@ -12,8 +12,8 @@ function proccessAdminMessage($phone, $message, $name = "Not Registered", $media
     global $SYSTEM_ADMIN_PHONES;
 
     $message = trim(substr($message, strpos($message, ':') + 1));
-    foreach($SYSTEM_ADMIN_PHONES as $adminPhone) {
-        singleSMS($adminPhone, $phone.' ('.$name.')'.":\n\n".$message);
+    foreach ($SYSTEM_ADMIN_PHONES as $adminPhone) {
+        singleSMS($adminPhone, $phone.' ('.$name.')'.":\n\n".$message, mediaURLForPhone($phone));
     }
 }
 
@@ -34,7 +34,7 @@ if ($user = getUserByPhone($phone)) {
 
     if (startsWith(strtoupper($message), 'MSG:')) {
         proccessAdminMessage($phone, $message, $user['name']);
-        return singleSMS($phone, SYSTEM_RESPONSE_ADMIN_SENT, mediaURLForPhone($phone));
+        return singleSMS($phone, SYSTEM_RESPONSE_ADMIN_SENT);
     }
 
     if ($user['waiting_name']) {
