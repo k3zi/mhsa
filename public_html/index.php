@@ -18,6 +18,7 @@ require_once(substr(getcwd(), 0, strpos(getcwd(), 'public_html')).'includes/incl
   <link href="css/main.css" rel="stylesheet">
   <link id="css-preset" href="css/presets/preset1.css" rel="stylesheet">
   <link href="css/responsive.css" rel="stylesheet">
+  <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
 
   <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
@@ -26,6 +27,13 @@ require_once(substr(getcwd(), 0, strpos(getcwd(), 'public_html')).'includes/incl
 
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
   <link rel="shortcut icon" href="images/favicon.ico">
+
+  <style>
+  td, th {
+      vertical-align: middle !important;
+      text-align: center;
+  }
+  </style>
 </head><!--/head-->
 
 <body>
@@ -259,7 +267,7 @@ require_once(substr(getcwd(), 0, strpos(getcwd(), 'public_html')).'includes/incl
         <div class="heading text-center col-sm-8 col-sm-offset-2 wow fadeInUp" data-wow-duration="1200ms" data-wow-delay="300ms">
           <h2>Player Statistics</h2>
 
-          <table class="table table-bordered">
+          <table id="statsTable" class="table table-bordered">
             <thead>
               <tr>
                 <th>Pos.</th>
@@ -340,22 +348,13 @@ require_once(substr(getcwd(), 0, strpos(getcwd(), 'public_html')).'includes/incl
   <script type="text/javascript" src="js/lightbox.min.js"></script>
   <script type="text/javascript" src="js/jquery.countdown.min.js"></script>
   <script type="text/javascript" src="js/jqBootstrapValidation.js"></script>
+  <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="js/dataTables.bootstrap.min.js"></script>
   <script type="text/javascript" src="js/main.js"></script>
 
   <script>
   $(function() {
-    $("#countdown").countdown("<?=date('Y/m/d H:i:s', strtotime(SYSTEM_START_DATE_STRING))?>", function(event) {
-        $(this).text(event.strftime('%D days | %H hours | %M minutes | %S seconds'));
-    });
-
-    var $timeline_block = $('.cd-timeline-block');
-
-	//hide timeline blocks which are outside the viewport
-	$timeline_block.each(function(){
-		if($(this).offset().top > $(window).scrollTop()+$(window).height()*0.75) {
-			$(this).find('.cd-timeline-img, .cd-timeline-content').addClass('is-hidden');
-		}
-	});
+    $("#statsTable").DataTable();
 
 	//on scolling, show/animate timeline blocks when enter the viewport
 	$(window).on('scroll', function(){
@@ -365,6 +364,10 @@ require_once(substr(getcwd(), 0, strpos(getcwd(), 'public_html')).'includes/incl
 			}
 		});
 	});
+
+    $("#countdown").countdown("<?=date('Y/m/d H:i:s', strtotime(SYSTEM_START_DATE_STRING))?>", function(event) {
+        $(this).text(event.strftime('%D days | %H hours | %M minutes | %S seconds'));
+    });
   });
   </script>
 </body>
