@@ -407,6 +407,7 @@ function singleSMS($to, $message, $mediaURL = null) {
   if($to == TWILIO_PHONE_NUMBER || $to == substr(TWILIO_PHONE_NUMBER, 0, -10)) return;
 
   if ($mediaURL) {
+	  echo 'send with: '.$mediaURL;
 	  return $twilio->account->messages->sendMessage(TWILIO_PHONE_NUMBER, $to, $message, array($mediaURL));
   }
 
