@@ -476,7 +476,7 @@ function getPrankCallForUser($user) {
 }
 
 function getRandomDeathTag() {
-	$responses = ['MaybeNextYear', 'WhatAWasteOfLife', 'KeepCalmAndKeepPlaying', 'YouBroughtThisOnYourself'];
+	$responses = ['MaybeNextYear', 'WhatAWasteOfLife', 'KeepCalmAndKeepPlaying', 'YouBroughtThisOnYourself', 'GoneButNotForgotten'];
 	return $responses[array_rand($responses)];
 }
 
