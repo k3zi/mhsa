@@ -119,7 +119,7 @@ function getTotalNumberOfPlayers() {
 
 function getTop10Players($limit = 10) {
 	$limit = $limit > 0 ? ' LIMIT '.$limit : '';
-	return DB::query('SELECT users.name, users.twitter_name, COUNT(k.kill_id) AS num_kills, (d.kill_id IS NOT NULL) AS dead, (s.kill_id IS NOT NULL) AS suicide, SUM(xp.value) AS points FROM users '.SYSTEM_SQL_STATS_JOIN.' WHERE '.SYSTEM_SQL_VALID_USER.' GROUP BY users.phone ORDER BY dead ASC, suicide ASC, num_kills DESC'.$limit);
+	return DB::query('SELECT users.name, users.twitter_name, COUNT(k.kill_id) AS num_kills, (d.kill_id IS NOT NULL) AS dead, (s.kill_id IS NOT NULL) AS suicide, COUNT(xp.value) AS points FROM users '.SYSTEM_SQL_STATS_JOIN.' WHERE '.SYSTEM_SQL_VALID_USER.' GROUP BY users.phone ORDER BY dead ASC, suicide ASC, num_kills DESC'.$limit);
 }
 
 //Handle Text Response
