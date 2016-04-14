@@ -21,6 +21,8 @@ define('SYSTEM_TIME_BETWEEN_COMMANDS', 60*5);
 define('SYSTEM_START_DATE_STRING', 'April 4th, 2016 7:00 AM');
 define('SYSTEM_STARTED', true);
 
+define('SYSTEM_XP_CONFIRMEDKILL', 5);
+
 //Setup Things
 
 $twilio = new Services_Twilio(TWILIO_ACCOUNT_SID, TWILIO_TOKEN);
@@ -265,7 +267,16 @@ function checkUserDeathTexts($isAssassin, $userID) {
 		$message = formatUsername($assassin).' has assassinated '.formatUsername($target);
 		log_text('TWEET --> '.$message);
 		if (SYSTEM_STARTED) {
-			postToTwitter($message, mediaURLForPhone($assassin['phone']));
+			$mediaURL = mediaURLForPhone($assassin['phone']);
+			if ($mediaURL) {
+				DB::insert('xp', array(
+					'user_id' => $assassin['user_id'],
+					'value' => SYSTEM_XP_CONFIRMEDKILL,
+					'date' => time()
+				));
+			}
+			
+			postToTwitter($message, $mediaURL);
 		}
 
 		if ($waitlist = getWaitlistUser()) {
