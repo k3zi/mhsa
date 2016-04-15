@@ -22,7 +22,7 @@ define('SYSTEM_START_DATE_STRING', 'April 4th, 2016 7:00 AM');
 define('SYSTEM_STARTED', true);
 
 define('SYSTEM_XP_KILL', 5);
-define('SYSTEM_XP_CONFIRMEDKILL', 5);
+define('SYSTEM_XP_KILLCONFIRMED', 5);
 define('SYSTEM_XP_MULTIKILL', 5);
 
 //Setup Things
@@ -289,11 +289,11 @@ function checkUserDeathTexts($isAssassin, $userID) {
 		if ($mediaURL) {
 			DB::insert('xp', array(
 				'user_id' => $assassin['user_id'],
-				'value' => SYSTEM_XP_CONFIRMEDKILL,
+				'value' => SYSTEM_XP_KILLCONFIRMED,
 				'date' => time()
 			));
 
-			$personalMessage = 'You earned '.SYSTEM_XP_CONFIRMEDKILL.' XP for adding a photo!';
+			$personalMessage = 'You earned '.SYSTEM_XP_KILLCONFIRMED.' XP for adding a photo!';
 			log_text('SEND --> '.$assassin['name'].': '.$personalMessage);
 
 			if (SYSTEM_STARTED) {
@@ -301,7 +301,7 @@ function checkUserDeathTexts($isAssassin, $userID) {
 			}
 		}
 
-		$message = formatUsername($assassin).' has assassinated '.formatUsername($target).($mediaURL ? ' #ConfirmedKill' : '');
+		$message = formatUsername($assassin).' has assassinated '.formatUsername($target).($mediaURL ? ' #KillConfirmed' : '');
 		log_text('TWEET --> '.$message);
 		if (SYSTEM_STARTED) {
 			postToTwitter($message, $mediaURL);
