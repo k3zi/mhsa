@@ -410,8 +410,8 @@ function checkForAchievment($user) {
 
 	if ($killsToday > 1) {
 		$xpEarned = xpForMultiKills($killsToday);
-		$message = $user['name'].' earned '.$xpEarned.' XP for a #'.multiplierForNumber().'Kill in the same day!';
-		$personalMessage = 'You earned '.$xpEarned.' XP for a '.multiplierForNumber().' Kill in the same day!';
+		$message = $user['name'].' earned '.$xpEarned.' XP for a #'.multiplierForNumber($killsToday).'Kill in the same day!';
+		$personalMessage = 'You earned '.$xpEarned.' XP for a '.multiplierForNumber($killsToday).' Kill in the same day!';
 
 		DB::insert('xp', array(
 			'user_id' => $user['user_id'],
