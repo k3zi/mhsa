@@ -17,7 +17,7 @@ define('SYSTEM_RESPONSE_NO_ACCOUNT', "Martin Assassins\n\nThis phone isn't conne
 define('SYSTEM_RESPONSE_WITHDRAW', "You have been withdrawn.");
 define('SYSTEM_RESPONSE_ADMIN_SENT', "Your message has been routed to an ".SYSTEM_SITE_NAME_SHORT." admin.");
 
-define('SYSTEM_TIME_BETWEEN_COMMANDS', 60*5);
+define('SYSTEM_TIME_BETWEEN_COMMANDS', 60*10);
 define('SYSTEM_START_DATE_STRING', 'April 4th, 2016 7:00 AM');
 define('SYSTEM_STARTED', true);
 
