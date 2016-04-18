@@ -57,87 +57,87 @@ if ($user = getUserByPhone($phone)) {
     }
 
     switch (strtoupper($message)) {
-      case 'CONFIRM':
-        $response = SYSTEM_RESPONSE_ALREADY_CONFIRMED;
-      break;
+        case 'CONFIRM':
+            $response = SYSTEM_RESPONSE_ALREADY_CONFIRMED;
+            break;
 
-      case 'TOP':
-        $response = SYSTEM_RESPONSE_COMMAND_NOT_AVAIL;
-      break;
+        case 'TOP':
+            $response = SYSTEM_RESPONSE_COMMAND_NOT_AVAIL;
+            break;
 
       case 'ELIMINATED':
-        if (!SYSTEM_STARTED) {
-            $response = SYSTEM_RESPONSE_COMMAND_NOT_AVAIL;
-        } else if ($user['dead'] || $user['suicide']) {
-            $response = SYSTEM_RESPONSE_ALREADY_DEAD;
-        } else {
-            userTextedDidEliminate($user);
-        }
-      break;
+            if (!SYSTEM_STARTED) {
+                $response = SYSTEM_RESPONSE_COMMAND_NOT_AVAIL;
+            } else if ($user['dead'] || $user['suicide']) {
+                $response = SYSTEM_RESPONSE_ALREADY_DEAD;
+            } else {
+                userTextedDidEliminate($user);
+            }
+            break;
 
       case 'RIP':
-        if (!SYSTEM_STARTED) {
-            $response = SYSTEM_RESPONSE_COMMAND_NOT_AVAIL;
-        } else if ($user['dead'] || $user['suicide']) {
-            $response = SYSTEM_RESPONSE_ALREADY_DEAD;
-        } else {
-            userTextedWasAssassinated($user);
-        }
-      break;
+            if (!SYSTEM_STARTED) {
+                $response = SYSTEM_RESPONSE_COMMAND_NOT_AVAIL;
+            } else if ($user['dead'] || $user['suicide']) {
+                $response = SYSTEM_RESPONSE_ALREADY_DEAD;
+            } else {
+                userTextedWasAssassinated($user);
+            }
+            break;
 
       case 'SUICIDE':
-        if (!SYSTEM_STARTED) {
-            $response = SYSTEM_RESPONSE_COMMAND_NOT_AVAIL;
-        } else if ($user['dead'] || $user['suicide']) {
-            $response = SYSTEM_RESPONSE_ALREADY_DEAD;
-        } else {
-            userTextDidSuicide($user);
-        }
-      break;
+            if (!SYSTEM_STARTED) {
+                $response = SYSTEM_RESPONSE_COMMAND_NOT_AVAIL;
+            } else if ($user['dead'] || $user['suicide']) {
+                $response = SYSTEM_RESPONSE_ALREADY_DEAD;
+            } else {
+                userTextDidSuicide($user);
+            }
+            break;
 
       case 'STATUS':
-        $response = '';
-        $response .= "\n".'Name: '.$user['name'];
-        if (SYSTEM_STARTED) {
-            $response .= "\n".'Status: '.formatUserStatus($user);
-            $response .= "\n"."Kills: ".$user['num_kills'];
-            $response .= "\n"."XP: ".($user['points'] ? $user['points'] : 0);
-        } else {
-            $response .= "\n".'Status: Registered';
-        }
-      break;
+            $response = '';
+            $response .= "\n".'Name: '.$user['name'];
+            if (SYSTEM_STARTED) {
+                $response .= "\n".'Status: '.formatUserStatus($user);
+                $response .= "\n"."Kills: ".$user['num_kills'];
+                $response .= "\n"."XP: ".($user['points'] ? $user['points'] : 0);
+            } else {
+                $response .= "\n".'Status: Registered';
+            }
+            break;
 
       case 'TARGET':
-        if (!SYSTEM_STARTED) {
-            $response = SYSTEM_RESPONSE_COMMAND_NOT_AVAIL;
-        } else {
-            $target = getUser($user['target_id']);
-            $response = 'Your target is: '.$target['name'];
-        }
-      break;
+            if (!SYSTEM_STARTED) {
+                $response = SYSTEM_RESPONSE_COMMAND_NOT_AVAIL;
+            } else {
+                $target = getUser($user['target_id']);
+                $response = 'Your target is: '.$target['name'];
+            }
+            break;
 
       case 'RANK':
-        $response = SYSTEM_RESPONSE_COMMAND_NOT_AVAIL;
-      break;
+            $response = SYSTEM_RESPONSE_COMMAND_NOT_AVAIL;
+            break;
 
       case 'COMMANDS':
-        $response = getTextCommands();
-      break;
+            $response = getTextCommands();
+            break;
 
       case 'WITHDRAW':
-        if (!SYSTEM_STARTED) {
-          DB::delete('users', "user_id=%d", $user['user_id']);
-          $response = SYSTEM_RESPONSE_WITHDRAW;
-        } else {
-          $response = 'The game has already started. Withdraw has been replaced with suicide #WhatAWasteOfLife';
-        }
-      break;
+            if (!SYSTEM_STARTED) {
+              DB::delete('users', "user_id=%d", $user['user_id']);
+              $response = SYSTEM_RESPONSE_WITHDRAW;
+            } else {
+              $response = 'The game has already started. Withdraw has been replaced with suicide #WhatAWasteOfLife';
+            }
+            break;
 
       default:
-      if (!$didStoreMedia) {
-        $response = SYSTEM_RESPONSE_INVALID_COMMAND;
-      }
-      break;
+            if (!$didStoreMedia) {
+                $response = SYSTEM_RESPONSE_INVALID_COMMAND;
+            }
+            break;
     }
 } else {
     $didStoreMedia = checkAndStoreMedia($phone, $sms);
