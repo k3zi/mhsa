@@ -66,19 +66,23 @@ if ($user = getUserByPhone($phone)) {
             break;
 
         case 'YES':
-            $response = 'You have answered: yes.';
-            DB::insert('poll', array(
-     		  'answer' => 1,
-              'user_id' => $user['user_id']
-            ));
+            if (!$user['dead']) {
+                $response = 'You have answered: yes.';
+                DB::insert('poll', array(
+         		  'answer' => 1,
+                  'user_id' => $user['user_id']
+                ));
+            }
             break;
 
         case 'NO':
-            $response = 'You have answered: no.';
-            DB::insert('poll', array(
-     		  'answer' => 0,
-              'user_id' => $user['user_id']
-            ));
+            if (!$user['dead']) {
+                $response = 'You have answered: no.';
+                DB::insert('poll', array(
+         		  'answer' => 0,
+                  'user_id' => $user['user_id']
+                ));
+            }
             break;
 
       case 'ELIMINATED':
