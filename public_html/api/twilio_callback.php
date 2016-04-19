@@ -66,7 +66,7 @@ if ($user = getUserByPhone($phone)) {
             break;
 
         case: 'YES':
-            $response 'You have answered: yes.';
+            $response = 'You have answered: yes.';
             DB::insert('poll', array(
      		  'answer' => 1,
               'user' => $user['user_id']
@@ -74,7 +74,7 @@ if ($user = getUserByPhone($phone)) {
             break;
 
         case: 'NO':
-            $response 'You have answered: no.';
+            $response = 'You have answered: no.';
             DB::insert('poll', array(
      		  'answer' => 0,
               'user' => $user['user_id']
