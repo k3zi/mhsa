@@ -19,7 +19,6 @@ define('SYSTEM_RESPONSE_ADMIN_SENT', "Your message has been routed to an ".SYSTE
 
 define('SYSTEM_TIME_BETWEEN_COMMANDS', 60*10);
 define('SYSTEM_START_DATE_STRING', 'April 4th, 2016 7:00 AM');
-define('SYSTEM_HUNGER_GAMES_MODE_ENABLED', false);
 define('SYSTEM_STARTED', true);
 
 define('SYSTEM_XP_KILL', 5);
