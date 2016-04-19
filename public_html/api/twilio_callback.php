@@ -65,6 +65,22 @@ if ($user = getUserByPhone($phone)) {
             $response = SYSTEM_RESPONSE_COMMAND_NOT_AVAIL;
             break;
 
+        case: 'YES':
+            $response 'You have answered: yes.';
+            DB::insert('poll', array(
+     		  'answer' => 1,
+              'user' => $user['user_id']
+            ));
+            break;
+
+        case: 'NO':
+            $response 'You have answered: no.';
+            DB::insert('poll', array(
+     		  'answer' => 0,
+              'user' => $user['user_id']
+            ));
+            break;
+
       case 'ELIMINATED':
             if (!SYSTEM_STARTED) {
                 $response = SYSTEM_RESPONSE_COMMAND_NOT_AVAIL;
@@ -98,6 +114,7 @@ if ($user = getUserByPhone($phone)) {
       case 'STATUS':
             $response = '';
             $response .= "\n".'Name: '.$user['name'];
+            $response .= "\n"."User ID: ".$user['user_id'];
             if (SYSTEM_STARTED) {
                 $response .= "\n".'Status: '.formatUserStatus($user);
                 $response .= "\n"."Kills: ".$user['num_kills'];
