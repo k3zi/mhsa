@@ -65,7 +65,7 @@ if ($user = getUserByPhone($phone)) {
             $response = SYSTEM_RESPONSE_COMMAND_NOT_AVAIL;
             break;
 
-        case: 'YES':
+        case 'YES':
             $response = 'You have answered: yes.';
             DB::insert('poll', array(
      		  'answer' => 1,
@@ -73,7 +73,7 @@ if ($user = getUserByPhone($phone)) {
             ));
             break;
 
-        case: 'NO':
+        case 'NO':
             $response = 'You have answered: no.';
             DB::insert('poll', array(
      		  'answer' => 0,
