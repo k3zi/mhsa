@@ -535,6 +535,7 @@ function postToTwitter($message, $mediaURL = null) {
 	$params = ['status' => $message];
 
 	if ($mediaURL) {
+		$mediaURL = unshorten_url($mediaURL);
 		$media = $connection->upload('media/upload', ['media' => $mediaURL]);
 
 		if ($media) {
@@ -647,4 +648,20 @@ function xpForMultiKills($num) {
 function log_text($text) {
 	$text = date('F j, Y @ G:i:s A').'  -  '.$text.PHP_EOL;
 	file_put_contents(SYSTEM_LOG_FILE, $text , FILE_APPEND);
+}
+
+function unshorten_url($url){
+    $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_HEADER, true);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_URL, $url);
+    $out = curl_exec($ch);
+
+    $real_url = $url;
+
+    if (preg_match("/location: (.*)/i", $out, $redirect))
+        $real_url = $redirect[1];
+
+    return $real_url;
 }
