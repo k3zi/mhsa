@@ -132,8 +132,12 @@ if ($user = getUserByPhone($phone)) {
             if (!SYSTEM_STARTED) {
                 $response = SYSTEM_RESPONSE_COMMAND_NOT_AVAIL;
             } else {
-                $target = getUser($user['target_id']);
-                $response = 'Your target is: '.$target['name'];
+                if ($user['dead'] || $user['suicide']) {
+                    $response = SYSTEM_RESPONSE_ALREADY_DEAD;
+                } else {
+                    $target = getUser($user['target_id']);
+                    $response = 'Your target is: '.$target['name'];
+                }
             }
             break;
 

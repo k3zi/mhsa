@@ -180,7 +180,8 @@ require_once(substr(getcwd(), 0, strpos(getcwd(), 'public_html')).'includes/incl
             <h3>8. All assassinations are final. If you text "rip" you are acknowledging that it was a good kill</h3>
             <h3>9. In order for us to determine the validity of a kill it is necessary for you to take a picture of the mark.</h3>
             <h3>10. If possible stay with your target until you see them text "rip"</h3>
-            <h3>11. No assassinating anybody purchasing tickets in the prom/bash ticket lines. If while purchasing tickets, you think you're  being targeted, you may use Swiper no Swiping. It may only be used once per assassin. It is valid until the target is out of sight. Also make sure to yell out Swiper no Swiping so your assassin hears it.</h3>
+            <h3>11. No assassinating anybody purchasing tickets in the prom/bash ticket lines.</h3>
+            <h3>12. You may use Swiper No Swiping. It may only be used once per assassin. It is valid until the target is out of sight. Also make sure to yell out Swiper no Swiping so your assassin hears it.</h3>
           </div>
         </div>
       </div>
