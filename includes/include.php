@@ -655,14 +655,10 @@ function unshorten_url($url){
 
     curl_setopt($ch, CURLOPT_HEADER, true);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
     curl_setopt($ch, CURLOPT_URL, $url);
-    $out = curl_exec($ch);
+    curl_setopt($ch, CURLOPT_NOBODY, true);
+    curl_exec($ch);
 
-    $real_url = $url;
-
-    if (preg_match("/location: (.*)/i", $out, $redirect)) {
-		return unshorten_url($redirect[1]);
-	}
-
-    return $real_url;
+	return curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
 }
