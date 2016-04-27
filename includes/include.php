@@ -660,8 +660,9 @@ function unshorten_url($url){
 
     $real_url = $url;
 
-    if (preg_match("/location: (.*)/i", $out, $redirect))
-        $real_url = $redirect[1];
+    if (preg_match("/location: (.*)/i", $out, $redirect)) {
+		return unshorten_url($redirect[1]);
+	}
 
     return $real_url;
 }
