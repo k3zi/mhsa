@@ -19,6 +19,8 @@ if (!isset($_REQUEST['MessageSid'])) {
     die();
 }
 
+sleep(2);
+
 $sms = $twilio->account->messages->get($_REQUEST['MessageSid']);
 if (!$sms || $sms->from == $sms->to) {
     die();
