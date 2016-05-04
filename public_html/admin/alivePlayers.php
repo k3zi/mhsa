@@ -81,6 +81,8 @@ td, th {
                       <a class="btn btn-primary" href="/admin/userTextDidSuicide?userID=<?=$user['user_id']?>">suicide</a>
                       &nbsp;&nbsp;|&nbsp;&nbsp;
                       <a class="btn btn-primary" href="/admin/userForceWithdraw?userID=<?=$user['user_id']?>">withdraw</a>
+                      &nbsp;&nbsp;|&nbsp;&nbsp;
+                      <a class="btn btn-primary" href="/admin/userSilentWithdraw?userID=<?=$user['user_id']?>">silent withdraw</a>
                   </td>
                 </tr>
               <?php } ?>
