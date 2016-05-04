@@ -218,6 +218,23 @@ function userForceWithdraw($user) {
 	}
 }
 
+function userSilentWithdraw($user) {
+	log_text('ACTION --> '.$user['name'].' was withdrawn');
+	$time = time();
+
+	DB::update('users', array(
+		'text_rip' => -1,
+		'target_id' => -1,
+		'text_eliminated' => -1
+	), "user_id=%d", $user['user_id']);
+
+	DB::insert('kills', array(
+		'eliminated' => $user['user_id'],
+		'killer' => $user['user_id'],
+		'date' => $time
+	));
+}
+
 function userTextedWasAssassinated($user) {
 	log_text('ACTION --> '.$user['name'].' texted: rip');
 	$time = time();
