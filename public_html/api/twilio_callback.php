@@ -88,33 +88,15 @@ if ($user = getUserByPhone($phone)) {
             break;
 
       case 'ELIMINATED':
-            if (!SYSTEM_STARTED) {
-                $response = SYSTEM_RESPONSE_COMMAND_NOT_AVAIL;
-            } else if ($user['dead'] || $user['suicide']) {
-                $response = SYSTEM_RESPONSE_ALREADY_DEAD;
-            } else {
-                userTextedDidEliminate($user);
-            }
+            $response = 'Use the MSG command';
             break;
 
       case 'RIP':
-            if (!SYSTEM_STARTED) {
-                $response = SYSTEM_RESPONSE_COMMAND_NOT_AVAIL;
-            } else if ($user['dead'] || $user['suicide']) {
-                $response = SYSTEM_RESPONSE_ALREADY_DEAD;
-            } else {
-                userTextedWasAssassinated($user);
-            }
+            $response = 'Use the MSG command';
             break;
 
       case 'SUICIDE':
-            if (!SYSTEM_STARTED) {
-                $response = SYSTEM_RESPONSE_COMMAND_NOT_AVAIL;
-            } else if ($user['dead'] || $user['suicide']) {
-                $response = SYSTEM_RESPONSE_ALREADY_DEAD;
-            } else {
-                userTextDidSuicide($user);
-            }
+            $response = 'Use the MSG command';
             break;
 
       case 'STATUS':
@@ -131,16 +113,7 @@ if ($user = getUserByPhone($phone)) {
             break;
 
       case 'TARGET':
-            if (!SYSTEM_STARTED) {
-                $response = SYSTEM_RESPONSE_COMMAND_NOT_AVAIL;
-            } else {
-                if ($user['dead'] || $user['suicide']) {
-                    $response = SYSTEM_RESPONSE_ALREADY_DEAD;
-                } else {
-                    $target = getUser($user['target_id']);
-                    $response = 'Your target is: '.$target['name'];
-                }
-            }
+            $response = 'Free For All';
             break;
 
       case 'RANK':
